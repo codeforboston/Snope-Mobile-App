@@ -26,9 +26,9 @@ angular.module('starter.controllers', [])
   $scope.message = "";
   $scope.authenticate = function(){
     console.log($scope.user)
-    $scope.message = "password invalid";  
+    $scope.message = "password invalid";
   };
-  
+
 
 })
 
@@ -43,7 +43,7 @@ angular.module('starter.controllers', [])
       console.log(response);
     });
 
-    
+
   };
 })
 
@@ -52,3 +52,7 @@ angular.module('starter.controllers', [])
     enableFriends: true
   };
 });
+
+.controller('ListCtrl', function($scope){
+  $scope.job = {};
+})

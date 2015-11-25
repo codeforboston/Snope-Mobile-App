@@ -34,26 +34,33 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   $stateProvider
 
   // setup an abstract state for the tabs directive
-    
 
-  //login page  
+
+  //login page
   .state('login', {
     url: '/login',
     templateUrl: 'templates/login.html',
     controller: 'LoginCtrl'
   })
 
-  //login page  
+  //login page
   .state('signup', {
     url: '/signup',
     templateUrl: 'templates/signup.html',
     controller: 'SignupCtrl'
   });
 
+  //list page
+  .state('list'), {
+    url: '/list',
+    templateUrl: 'templates/list.html',
+    controller: 'ListCtrl'
+  });
 
 
 
-  
+
+
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
