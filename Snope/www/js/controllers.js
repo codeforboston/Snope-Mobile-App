@@ -26,9 +26,9 @@ angular.module('starter.controllers', [])
   $scope.message = "";
   $scope.authenticate = function(){
     console.log($scope.user)
-    $scope.message = "password invalid";  
+    $scope.message = "password invalid";
   };
-  
+
 
 })
 
@@ -43,16 +43,12 @@ angular.module('starter.controllers', [])
       debugger;
       if(response.data.statusCode == 200) {
         alert(response.message);
-        $state.go('login');        
+        $state.go('list');        
       } else if(response.data.statusCode == 500){
         alert(response.message);
-      }              
-      
+      }                    
     });
 
-  
-
-    
   };
 })
 
@@ -60,4 +56,8 @@ angular.module('starter.controllers', [])
   $scope.settings = {
     enableFriends: true
   };
+})
+
+.controller('ListCtrl', function($scope){
+  $scope.job = {};
 });

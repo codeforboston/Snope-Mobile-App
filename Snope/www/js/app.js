@@ -48,10 +48,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     url: '/signup',
     templateUrl: 'templates/signup.html',
     controller: 'SignupCtrl'
+  })
+
+  .state('list', {
+    url: '/list',
+    templateUrl: 'templates/list.html',
+    controller: 'ListCtrl'
   });
 
 
-  
+
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
