@@ -32,16 +32,25 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('SignupCtrl', function($scope, $stateParams, $http) {
+.controller('SignupCtrl', function($scope, $stateParams,$state, $http) {
   $scope.user = {};
-  $scope.type = "Shoveler";
+  // $scope.type = "Shoveler";
 
   $scope.signup = function(){
-    alert("hello!");
-    $http.post('http://tunnel.shaneod.net/api/users?name=billy&type=shoveler&password=password')
+       
+    $http.post('http://tunnel.shaneod.net/api/users', $scope.user)
     .then(function(response){
-      console.log(response);
+      debugger;
+      if(response.data.statusCode == 200) {
+        alert(response.message);
+        $state.go('login');        
+      } else if(response.data.statusCode == 500){
+        alert(response.message);
+      }              
+      
     });
+
+  
 
     
   };
