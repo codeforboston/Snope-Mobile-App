@@ -1,9 +1,15 @@
-<ion-view view-title="List">
+<ion-view view-title="Jobs">
   <ion-content>
 
-    <div class="list card">
+    <div class="list card" ng-repeat="job in jobs">
+      {{job.firstName}}
+      {{job.lastName}}      
+    </div>
 
-      <a href="#" class="item item-thumbnail-right">
+  </ion-content>
+</ion-view>
+
+<!-- <a href="#" class="item item-thumbnail-right">
         <img src="http://placehold.it/100x100" />
         <div class="item item-divider">
           First Name, Last Name
@@ -16,8 +22,4 @@
         </button>
 
       </a>
-
-    </div>
-
-  </ion-content>
-</ion-view>
+ -->

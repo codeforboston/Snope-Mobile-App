@@ -37,8 +37,9 @@ angular.module('starter.controllers', [])
   // $scope.type = "Shoveler";
 
   $scope.signup = function(){
-       
-    $http.post('http://tunnel.shaneod.net/api/users', $scope.user)
+    
+    
+    $http.post('http://45.55.102.116/api/users', $scope.user)
     .then(function(response){
       debugger;
       if(response.data.statusCode == 200) {
@@ -58,6 +59,11 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ListCtrl', function($scope){
-  $scope.job = {};
-});
+.controller('ListCtrl', ['$scope', 'JobService',function($scope, JobService){
+  $scope.jobs = JobService.GetJobs();
+    
+}]);
+
+// .controller('JobDetailCtrl', function($scope){
+
+// });

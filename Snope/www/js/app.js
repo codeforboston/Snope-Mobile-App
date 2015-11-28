@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -33,9 +33,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // Each state's controller can be found in controllers.js
   $stateProvider
 
-  // setup an abstract state for the tabs directive
-    
-
+  
   //login page  
   .state('login', {
     url: '/login',
@@ -54,7 +52,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     url: '/list',
     templateUrl: 'templates/list.html',
     controller: 'ListCtrl'
-  });
+  })
+
+  .state('jobDetail', {
+    url: 'jobDetail/:id',
+    templateUrl: 'templates/jobDetail.html',
+    controller: 'JobDetailCtrl'
+  })
+
+  
 
 
 
@@ -62,4 +68,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
 
+//   
+
 });
+
+app.factory('JobService',['$http',function($http){
+    var jobs = []; //Private Variable
+    return {
+        GetJobs: function(){ 
+            // return $http.get("path/to/resource").then(function(response){
+            //     people = response;
+            //     return response;
+            return [{id: 1,firstName: "Joe", lastName: "Doe", phoneNumber: "123"}, {id: 2, firstName: "Jane", lastName: "Doe", phoneNumber: "789"}];            
+        },
+        GetJob: function(jobId){
+            for(i=0;i<jobs.length;i++){
+                if(jobs[i].id == jobId){
+                    return jobs[i];
+                }
+            }
+        }
+    }
+}]);
