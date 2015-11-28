@@ -62,8 +62,10 @@ angular.module('starter.controllers', [])
 .controller('ListCtrl', ['$scope', 'JobService',function($scope, JobService){
   $scope.jobs = JobService.GetJobs();
     
+}])
+
+.controller('JobDetailCtrl', ['$stateParams', '$scope', 'JobService',function($stateParams, $scope, JobService){
+  var jobId = $stateParams.id;
+  $scope.job = JobService.GetJob(jobId);
+  debugger;
 }]);
-
-// .controller('JobDetailCtrl', function($scope){
-
-// });

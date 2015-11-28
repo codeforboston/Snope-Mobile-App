@@ -1,10 +1,14 @@
 <ion-view view-title="Jobs">
   <ion-content>
 
+    
     <div class="list card" ng-repeat="job in jobs">
+    <a href="#/jobDetail/{{job.id}}">
       {{job.firstName}}
       {{job.lastName}}      
+    </a>
     </div>
+    
 
   </ion-content>
 </ion-view>

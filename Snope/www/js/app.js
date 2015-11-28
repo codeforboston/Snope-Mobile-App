@@ -55,15 +55,10 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
   })
 
   .state('jobDetail', {
-    url: 'jobDetail/:id',
+    url: '/jobDetail/:id',
     templateUrl: 'templates/jobDetail.html',
     controller: 'JobDetailCtrl'
   })
-
-  
-
-
-
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
@@ -79,9 +74,11 @@ app.factory('JobService',['$http',function($http){
             // return $http.get("path/to/resource").then(function(response){
             //     people = response;
             //     return response;
+            jobs = [{id: 1,firstName: "Joe", lastName: "Doe", phoneNumber: "123"}, {id: 2, firstName: "Jane", lastName: "Doe", phoneNumber: "789"}];            
             return [{id: 1,firstName: "Joe", lastName: "Doe", phoneNumber: "123"}, {id: 2, firstName: "Jane", lastName: "Doe", phoneNumber: "789"}];            
         },
         GetJob: function(jobId){
+            debugger;
             for(i=0;i<jobs.length;i++){
                 if(jobs[i].id == jobId){
                     return jobs[i];
