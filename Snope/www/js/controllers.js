@@ -43,10 +43,10 @@ angular.module('starter.controllers', [])
     .then(function(response){
       debugger;
       if(response.data.statusCode == 200) {
-        alert(response.message);
+        //alert(response.message);
         $state.go('list');        
       } else if(response.data.statusCode == 500){
-        alert(response.message);
+        //alert(response.message);
       }                    
     });
 
@@ -64,8 +64,24 @@ angular.module('starter.controllers', [])
     
 }])
 
-.controller('JobDetailCtrl', ['$stateParams', '$scope', 'JobService',function($stateParams, $scope, JobService){
+.controller('JobDetailCtrl', ['$stateParams', '$scope', 'JobService', 'uiGmapGoogleMapApi',function($stateParams, $scope, JobService, uiGmapGoogleMapApi){
   var jobId = $stateParams.id;
   $scope.job = JobService.GetJob(jobId);
-  debugger;
-}]);
+
+  uiGmapGoogleMapApi.then(function(maps) {
+      $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+      function initMap() {
+        $scope.map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 8
+        });
+      }
+    });
+}])
+
+.controller('PostJobCtrl', function($scope){
+  $scope.job = {};
+  
+
+
+});

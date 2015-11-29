@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'uiGmapgoogle-maps'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -60,11 +60,23 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
     controller: 'JobDetailCtrl'
   })
 
+  .state('postJobForm', {
+    url: '/postJobForm',
+    templateUrl: 'templates/postJobForm.html',
+    controller: 'PostJobCtrl'
+  })
+
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
 
-//   
 
+})
+.config(function(uiGmapGoogleMapApiProvider) {
+    uiGmapGoogleMapApiProvider.configure({
+            key: 'AIzaSyDu3ACzX5UEHrISWJyIDEYjN40IppUvbbM',
+        v: '3.20', //defaults to latest 3.X anyhow
+        libraries: 'weather,geometry,visualization'
+    });
 });
 
 app.factory('JobService',['$http',function($http){
@@ -74,11 +86,11 @@ app.factory('JobService',['$http',function($http){
             // return $http.get("path/to/resource").then(function(response){
             //     people = response;
             //     return response;
-            jobs = [{id: 1,firstName: "Joe", lastName: "Doe", phoneNumber: "123"}, {id: 2, firstName: "Jane", lastName: "Doe", phoneNumber: "789"}];            
-            return [{id: 1,firstName: "Joe", lastName: "Doe", phoneNumber: "123"}, {id: 2, firstName: "Jane", lastName: "Doe", phoneNumber: "789"}];            
+            jobs = $http.get('http://45.55.102.116/api/jobs')            
+            return jobs;
         },
         GetJob: function(jobId){
-            debugger;
+            
             for(i=0;i<jobs.length;i++){
                 if(jobs[i].id == jobId){
                     return jobs[i];

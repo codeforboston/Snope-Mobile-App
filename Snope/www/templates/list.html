@@ -3,27 +3,29 @@
 
     
     <div class="list card" ng-repeat="job in jobs">
-    <a href="#/jobDetail/{{job.id}}">
-      {{job.firstName}}
-      {{job.lastName}}      
-    </a>
+      <div class="row">
+      
+          {{job.firstName}} 
+          {{job.lastName}}  
+      
+          <div class="col col-70">
+          <p>Phone: {{job.phoneNumber}}</p>
+          <p>Location: 16 Nowhere st</p>
+          <p>Offering: $120</p>        
+        </div>
+        <div class="col col-30 pull-right">
+          <img src="http://placehold.it/100x100" class="pull-right">
+        </div>
+      </div>
+      <a href="#/jobDetail/{{job.id}}" class="item">
+          <button class="button button-full button-balanced">
+            <h2>Accept</h2>
+          </button>
+          </a>                            
     </div>
     
 
   </ion-content>
 </ion-view>
 
-<!-- <a href="#" class="item item-thumbnail-right">
-        <img src="http://placehold.it/100x100" />
-        <div class="item item-divider">
-          First Name, Last Name
-        </div>
-        <p>Phone: 617-555-5555</p>
-        <p>Location: 16 Nowhere st</p>
-        <p>Offering: $120</p>
-        <button class="button button-balanced">
-          <h2>Accept</h2>
-        </button>
-
-      </a>
- -->
+     

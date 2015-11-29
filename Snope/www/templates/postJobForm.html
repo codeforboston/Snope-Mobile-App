@@ -1,0 +1,22 @@
+<ion-view view-title="Post New Job">
+  <ion-content>    
+    <div class="list list-inset">
+      <h1>Create Job</h1>
+      
+      <label class="item item-input">
+        <input type="text" placeholder="Address" ng-model="job.address">
+      </label>
+      <label class="item item-input">
+        <input type="text" placeholder="Phone Number" ng-model="job.phoneNumber">
+      </label>
+      <label class="item item-input">
+        <input type="text" placeholder="Fee Offered" ng-model="job.fee">
+      </label>  
+      <button class="button button-block button-positive activated" ng-click="postJob()">Post Job</button>
+    </div>
+    
+    
+  </ion-content>
+</ion-view>
+
+     
