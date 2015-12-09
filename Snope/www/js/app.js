@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'uiGmapgoogle-maps', 'cordovaGeolocationModule'])
+var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'uiGmapgoogle-maps'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -86,8 +86,15 @@ app.factory('JobService',['$http',function($http){
             // return $http.get("path/to/resource").then(function(response){
             //     people = response;
             //     return response;
-            jobs = $http.get('http://45.55.102.116/api/jobs')            
+            jobs = $http.get('http://45.55.102.116/api/jobs')
+            .then(function(result){
+              jobs = result;
+               
+            });
             return jobs;
+            
+
+            
         },
         GetJob: function(jobId){
             

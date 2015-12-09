@@ -40,7 +40,7 @@ angular.module('starter.controllers', [])
     
     $http.post('http://45.55.102.116/api/users', $scope.user)
     .then(function(response){
-      debugger;
+      
       if(response.data.statusCode == 200) {
         //alert(response.message);
         $state.go('list');        
@@ -78,9 +78,12 @@ angular.module('starter.controllers', [])
     });
 }])
 
-.controller('PostJobCtrl', ['$scope', 'Camera','cordovaGeolocationModule',function($scope, Camera, cordovaGeolocationModule){
+.controller('PostJobCtrl', ['$scope', '$http', 'Camera',function($scope, $http, Camera){
   $scope.job = {};
-  alert(navigator.geolocation.getCurrentPosition());
+  $scope.job['latitude'] = 40;
+  $scope.job['longitude'] = 40;
+
+  
   $scope.getPhoto = function() {
     
     
@@ -89,26 +92,24 @@ angular.module('starter.controllers', [])
     }, function(err) {
       console.err(err);
     });
+
+
   };
 
-  $scope.getCurrentPosition = function() {
-    cordovaGeolocationService.getCurrentPosition(function(position){
-        alert(
-            'Latitude: '          + position.coords.latitude          + '\n' +
-            'Longitude: '         + position.coords.longitude         + '\n' +
-            'Altitude: '          + position.coords.altitude          + '\n' +
-            'Accuracy: '          + position.coords.accuracy          + '\n' +
-            'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-            'Heading: '           + position.coords.heading           + '\n' +
-            'Speed: '             + position.coords.speed             + '\n' +
-            'Timestamp: '         + position.timestamp                + '\n'
-        );
+  
+
+  $scope.postJob = function(){
+    $http.post('http://tunnel.shaneod.net/api/jobs', $scope.job)
+    .then(function(response){
+      
+        alert("post success!");        
+      if(response.data.statusCode == 200) {
+      
+      
+      } else if(response.data.statusCode == 500){
+        //alert(response.message);
+      }                    
     });
-}();
-
-
-  $scope.PostJob = function(){
-    
     
   };
   
