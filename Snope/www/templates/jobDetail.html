@@ -1,9 +1,16 @@
 <ion-view view-title="Job Detail">
 	<ion-content> 
 	<h1>Hello!</h1>
+		{{job.address}}
 		{{job.firstName}}
       {{job.lastName}}
 	      {{job.phoneNumber}}
+	      {{job.code}}
+	      <p>123 Fake Lane</p>
+	      <p>John Doe</p>
+	      <p>123-456-7897</p>
+	      <p>confirmation code: X7DE9</p>
+	      <p>Note: All transactions are cash</p>
 	      <ui-gmap-google-map center='map.center' zoom='map.zoom' id="map"></ui-gmap-google-map>
 	</ion-content>
 </ion-view>

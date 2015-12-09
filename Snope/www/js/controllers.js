@@ -29,7 +29,6 @@ angular.module('starter.controllers', [])
     $scope.message = "password invalid";
   };
 
-
 })
 
 .controller('SignupCtrl', function($scope, $stateParams,$state, $http) {
@@ -79,9 +78,39 @@ angular.module('starter.controllers', [])
     });
 }])
 
-.controller('PostJobCtrl', function($scope){
+.controller('PostJobCtrl', ['$scope', 'Camera','cordovaGeolocationModule',function($scope, Camera, cordovaGeolocationModule){
   $scope.job = {};
+  alert(navigator.geolocation.getCurrentPosition());
+  $scope.getPhoto = function() {
+    
+    
+    Camera.getPicture().then(function(imageURI) {
+      console.log(imageURI);
+    }, function(err) {
+      console.err(err);
+    });
+  };
+
+  $scope.getCurrentPosition = function() {
+    cordovaGeolocationService.getCurrentPosition(function(position){
+        alert(
+            'Latitude: '          + position.coords.latitude          + '\n' +
+            'Longitude: '         + position.coords.longitude         + '\n' +
+            'Altitude: '          + position.coords.altitude          + '\n' +
+            'Accuracy: '          + position.coords.accuracy          + '\n' +
+            'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+            'Heading: '           + position.coords.heading           + '\n' +
+            'Speed: '             + position.coords.speed             + '\n' +
+            'Timestamp: '         + position.timestamp                + '\n'
+        );
+    });
+}();
+
+
+  $scope.PostJob = function(){
+    
+    
+  };
   
 
-
-});
+}]);
