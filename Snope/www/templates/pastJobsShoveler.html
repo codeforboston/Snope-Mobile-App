@@ -1,0 +1,29 @@
+<ion-view view-title="Past Jobs">
+  <ion-content>
+
+
+    <div class="list card" ng-repeat="job in jobs">
+      <div class="row">
+
+          {{job.firstName}}
+          {{job.lastName}}
+
+          <div class="col col-70">
+          <p>Location: 16 Nowhere st</p>
+          <p>Offering: $120</p>
+          <p>Notes: This sidewalk is narrow</p>
+          <p>Confirmation code: {{job.id}}
+        </div>
+        <div class="col col-30 pull-right">
+        </div>
+      </div>
+      <a href="mailto:customerservice@snope.com?subject=Report from Job #{{job.id}}" class="item">
+          <button class="button button-full button-balanced">
+            <h2>Report</h2>
+          </button>
+          </a>
+    </div>
+
+
+  </ion-content>
+</ion-view>
