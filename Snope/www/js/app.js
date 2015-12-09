@@ -33,16 +33,16 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
   // Each state's controller can be found in controllers.js
   $stateProvider
 
-  
-  //login page  
+
+  //login page
   .state('login', {
     url: '/login',
     templateUrl: 'templates/login.html',
     controller: 'LoginCtrl'
   })
 
-  //login page  
-  .state('signup', { 
+  //login page
+  .state('signup', {
     url: '/signup',
     templateUrl: 'templates/signup.html',
     controller: 'SignupCtrl'
@@ -66,6 +66,12 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
     controller: 'PostJobCtrl'
   })
 
+    .state('pastJobsShoveler', {
+      url: '/jobsShoveler',
+      templateUrl: 'templates/pastJobsShoveler.html',
+      controller: 'PastJobsShovelerCtrl'
+    })
+
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
 
@@ -82,22 +88,24 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
 app.factory('JobService',['$http',function($http){
     var jobs = []; //Private Variable
     return {
-        GetJobs: function(){ 
+        GetJobs: function(){
             // return $http.get("path/to/resource").then(function(response){
             //     people = response;
             //     return response;
             jobs = $http.get('http://45.55.102.116/api/jobs')
+
             .then(function(result){
               jobs = result;
                
             });
+
             return jobs;
             
 
             
         },
         GetJob: function(jobId){
-            
+
             for(i=0;i<jobs.length;i++){
                 if(jobs[i].id == jobId){
                     return jobs[i];

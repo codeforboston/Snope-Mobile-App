@@ -36,17 +36,17 @@ angular.module('starter.controllers', [])
   // $scope.type = "Shoveler";
 
   $scope.signup = function(){
-    
-    
+
+
     $http.post('http://45.55.102.116/api/users', $scope.user)
     .then(function(response){
       
       if(response.data.statusCode == 200) {
         //alert(response.message);
-        $state.go('list');        
+        $state.go('list');
       } else if(response.data.statusCode == 500){
         //alert(response.message);
-      }                    
+      }
     });
 
   };
@@ -60,7 +60,7 @@ angular.module('starter.controllers', [])
 
 .controller('ListCtrl', ['$scope', 'JobService',function($scope, JobService){
   $scope.jobs = JobService.GetJobs();
-    
+
 }])
 
 .controller('JobDetailCtrl', ['$stateParams', '$scope', 'JobService', 'uiGmapGoogleMapApi',function($stateParams, $scope, JobService, uiGmapGoogleMapApi){
@@ -78,15 +78,22 @@ angular.module('starter.controllers', [])
     });
 }])
 
-.controller('PostJobCtrl', ['$scope', '$http', 'Camera',function($scope, $http, Camera){
+
+.controller('PastJobsShovelerCtrl', ['$scope', 'JobService',function($scope, JobService){
+  $scope.jobs = JobService.GetJobs();
+
+}])
+
+.controller('PostJobCtrl', ['$scope', 'Camera','cordovaGeolocationModule',function($scope, Camera, cordovaGeolocationModule){
+
   $scope.job = {};
   $scope.job['latitude'] = 40;
   $scope.job['longitude'] = 40;
 
   
   $scope.getPhoto = function() {
-    
-    
+
+
     Camera.getPicture().then(function(imageURI) {
       console.log(imageURI);
     }, function(err) {
@@ -95,8 +102,6 @@ angular.module('starter.controllers', [])
 
 
   };
-
-  
 
   $scope.postJob = function(){
     $http.post('http://tunnel.shaneod.net/api/jobs', $scope.job)
@@ -107,11 +112,8 @@ angular.module('starter.controllers', [])
       
       
       } else if(response.data.statusCode == 500){
-        //alert(response.message);
+
       }                    
-    });
-    
-  };
-  
+    });    
 
 }]);
