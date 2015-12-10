@@ -85,32 +85,21 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
     });
 });
 
-app.factory('JobService',['$http',function($http){
+app.factory('JobService',['$http', '$filter',function($http, $filter){
     var jobs = []; //Private Variable
     return {
         GetJobs: function(){
-            // return $http.get("path/to/resource").then(function(response){
-            //     people = response;
-            //     return response;
-            jobs = $http.get('http://45.55.102.116/api/jobs')
-
+            
+            return $http.get('http://45.55.102.116/api/jobs')
             .then(function(result){
-              jobs = result;
-               
-            });
-
-            return jobs;
-            
-
-            
+              jobs = result.data;
+              return jobs;  
+            });                                    
         },
         GetJob: function(jobId){
-
-            for(i=0;i<jobs.length;i++){
-                if(jobs[i].id == jobId){
-                    return jobs[i];
-                }
-            }
+            
+            var object_by_id = $filter('filter')(jobs, {_id: jobId })[0];
+            return object_by_id;
         }
     }
 }]);

@@ -59,23 +59,29 @@ angular.module('starter.controllers', [])
 })
 
 .controller('ListCtrl', ['$scope', 'JobService',function($scope, JobService){
-  $scope.jobs = JobService.GetJobs();
+    JobService.GetJobs().then(function(result){
+    $scope.jobs = result;  
+    
+  });
+  
 
 }])
 
-.controller('JobDetailCtrl', ['$stateParams', '$scope', 'JobService', 'uiGmapGoogleMapApi',function($stateParams, $scope, JobService, uiGmapGoogleMapApi){
-  var jobId = $stateParams.id;
+.controller('JobDetailCtrl', ['$stateParams', '$scope', '$log', '$timeout', 'JobService', 'uiGmapGoogleMapApi',function($stateParams, $scope, $log, $timeout, JobService, uiGmapGoogleMapApi){
+var jobId = $stateParams.id;
   $scope.job = JobService.GetJob(jobId);
+  var latitude = parseFloat($scope.job.latitude);
+  var longitude = parseFloat($scope.job.longitude);
 
-  uiGmapGoogleMapApi.then(function(maps) {
-      $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
-      function initMap() {
-        $scope.map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 8
-        });
+ // 
+    $scope.map = {center: {latitude: latitude, longitude: longitude }, zoom: 16 };    
+    $scope.marker = {
+      id: 0,
+      coords: {
+        latitude: latitude,
+        longitude: longitude
       }
-    });
+    };
 }])
 
 
@@ -103,12 +109,11 @@ angular.module('starter.controllers', [])
   };
 
   $scope.postJob = function(){
-    $http.post('http://tunnel.shaneod.net/api/jobs', $scope.job)
+    $http.post('http://45.55.102.116/api/jobs', $scope.job)
     .then(function(response){
       
         alert("post success!");        
-      if(response.data.statusCode == 200) {
-      
+      if(response.data.statusCode == 200) {      
       
       } else if(response.data.statusCode == 500){
 
