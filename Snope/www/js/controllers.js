@@ -114,6 +114,7 @@ angular.module('starter.controllers', [])
       } else if(response.data.statusCode == 500){
 
       }                    
-    });    
+    });
+  }
 
 }]);
