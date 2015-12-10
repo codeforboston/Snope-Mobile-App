@@ -118,7 +118,8 @@ var jobId = $stateParams.id;
       } else if(response.data.statusCode == 500){
 
       }                    
-    });    
+    });
+  }
 
 };
 
