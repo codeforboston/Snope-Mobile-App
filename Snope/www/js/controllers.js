@@ -100,7 +100,6 @@ angular.module('starter.controllers', [])
       console.err(err);
     });
 
-
   };
 
   $scope.postJob = function(){
@@ -115,5 +114,7 @@ angular.module('starter.controllers', [])
 
       }                    
     });    
+
+};
 
 }]);
