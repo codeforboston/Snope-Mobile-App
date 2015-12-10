@@ -90,7 +90,7 @@ var jobId = $stateParams.id;
 
 }])
 
-.controller('PostJobCtrl', ['$scope', 'Camera','cordovaGeolocationModule',function($scope, Camera, cordovaGeolocationModule){
+.controller('PostJobCtrl', ['$scope', 'Camera',function($scope, Camera){
 
   $scope.job = {};
   $scope.job['latitude'] = 40;
@@ -120,7 +120,5 @@ var jobId = $stateParams.id;
       }                    
     });
   }
-
-};
 
 }]);
