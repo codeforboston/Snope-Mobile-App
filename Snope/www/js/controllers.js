@@ -55,7 +55,7 @@ angular.module('starter.controllers', [])
         //alert(response.message);
         $state.go('tab.list');
       } else if(response.data.statusCode == 500){
-        //alert(response.message);
+        alert(response.data.message);
       }
     });
 
@@ -122,22 +122,28 @@ var jobId = $stateParams.id;
   
   $scope.getPhoto = function() {
 
+    var cameraOptions =   {   quality: 50,
+                      destinationType: navigator.camera.DestinationType.DATA_URL,
+                      sourceType: 1,      // 0:Photo Library, 1=Camera, 2=Saved Album
+                      encodingType: 0     // 0=JPG 1=PNG
+                  };
 
-    Camera.getPicture().then(function(imageData) {
-
-      var image = document.getElementById('myImage');
-      image.src = "data:image/jpeg;base64," + imageData;
-      alert("success");
-
+    navigator.camera.getPicture(function(imageData) {
       
-    }, function(err) {
-      console.err(err);
-      alert("failure");
-    });
+
+      $scope.job['photo'] = imageData;
+    
+
+  }, function(err) {
+
+    // Ruh-roh, something bad happened
+
+  }, cameraOptions);
 
   };
 
   $scope.postJob = function(){
+
     $http.post('http://45.55.102.116/api/jobs', $scope.job)
     .then(function(response){
       
