@@ -21,12 +21,17 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('LoginCtrl', function($scope, $stateParams, $http) {
+.controller('LoginCtrl', function($scope, $stateParams, $http, $state) {
   $scope.user = {};
   $scope.message = "";
   $scope.authenticate = function(){
+    $http.post('http://tunnel.shaneod.net/api/login', $scope.user).then(function(response){
+      
+      $state.go('tab.list');
+      
+    });
     console.log($scope.user)
-    $scope.message = "password invalid";
+    //$scope.message = "password invalid";
   };
 
 })
@@ -43,7 +48,7 @@ angular.module('starter.controllers', [])
       
       if(response.data.statusCode == 200) {
         //alert(response.message);
-        $state.go('list');
+        $state.go('tab.list');
       } else if(response.data.statusCode == 500){
         //alert(response.message);
       }
@@ -58,7 +63,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ListCtrl', ['$scope', 'JobService',function($scope, JobService){
+.controller('ListCtrl', ['$state','$scope', 'JobService',function($state, $scope, JobService){
     JobService.GetJobs().then(function(result){
     $scope.jobs = result;  
     
@@ -67,9 +72,10 @@ angular.module('starter.controllers', [])
 
 }])
 
-.controller('JobDetailCtrl', ['$stateParams', '$scope', '$log', '$timeout', 'JobService', 'uiGmapGoogleMapApi',function($stateParams, $scope, $log, $timeout, JobService, uiGmapGoogleMapApi){
+.controller('JobDetailCtrl', [ '$scope','$stateParams', '$log', '$timeout', 'JobService', 'uiGmapGoogleMapApi',function(  $scope, $stateParams, $log, $timeout, JobService, uiGmapGoogleMapApi){
 var jobId = $stateParams.id;
   $scope.job = JobService.GetJob(jobId);
+  
   var latitude = parseFloat($scope.job.latitude);
   var longitude = parseFloat($scope.job.longitude);
 
@@ -90,20 +96,38 @@ var jobId = $stateParams.id;
 
 }])
 
-.controller('PostJobCtrl', ['$scope', 'Camera',function($scope, Camera){
+.controller('TabCtrl', function($state, $scope){
+  var hideTabsStates = ['login']; 
+
+    $rootScope.$on('$ionicView.beforeEnter', function () {
+        $rootScope.hideTabs = ~hideTabsStates.indexOf($state.current.name)
+    });
+
+  
+})
+
+.controller('PostJobCtrl', ['$scope', 'Camera','$http',function($scope, Camera, $http){
 
   $scope.job = {};
   $scope.job['latitude'] = 40;
   $scope.job['longitude'] = 40;
+  $scope.job['customerId'] = "56551c3995df308b01000004";
+
 
   
   $scope.getPhoto = function() {
 
 
-    Camera.getPicture().then(function(imageURI) {
-      console.log(imageURI);
+    Camera.getPicture().then(function(imageData) {
+
+      var image = document.getElementById('myImage');
+      image.src = "data:image/jpeg;base64," + imageData;
+      alert("success");
+
+      
     }, function(err) {
       console.err(err);
+      alert("failure");
     });
 
   };

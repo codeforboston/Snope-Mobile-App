@@ -1,8 +1,8 @@
-<ion-view view-title="Login">
+<ion-view view-title="Login" >
 	<ion-content> 
 		<div class="list list-inset">
 		  <label class="item item-input">
-		    <input type="text" placeholder="Username" ng-model="user.name">
+		    <input type="text" placeholder="Email" ng-model="user.email">
 		  </label>
 		  <label class="item item-input">
 		    <input type="text" placeholder="Password" ng-model="user.password">
@@ -10,7 +10,8 @@
 		  <button class="button button-block button-positive activated" ng-click="authenticate()">Log In</button>
 		  <div ng-show="message.length > 0">{{ message }}</div>
 		  <h5>No account?</h5>
-		  <a href="#/signup"><button class="button button-block button-positive activated">Sign Up</button></a>
+		  <a href="#/signup"><button class="button button-block button-positive">Sign Up</button></a>
 		</div>		
-	</ion-content>
+	</ion-content>	
+
 </ion-view>

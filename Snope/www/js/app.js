@@ -33,6 +33,33 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
   // Each state's controller can be found in controllers.js
   $stateProvider
 
+  // setup an abstract state for the tabs directive
+    .state('tab', {
+    url: '/tab',
+    abstract: true,
+    templateUrl: 'templates/tabs.html'
+  })
+
+  .state('tab.pastJobsShoveler', {
+    url: '/pastJobsShoveler',
+    views: {
+      'pastJobsShoveler': {
+        templateUrl: 'templates/pastJobsShoveler.html',
+        controller: 'PastJobsShovelerCtrl'
+      }
+    }
+  })  
+
+  .state('tab.list', {
+    url: '/list',
+    views: {
+        'tab-jobs': {
+          templateUrl: 'templates/list.html',
+          controller: 'ListCtrl'
+        }
+      }
+  })  
+
 
   //login page
   .state('login', {
@@ -47,17 +74,16 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
     templateUrl: 'templates/signup.html',
     controller: 'SignupCtrl'
   })
+  
 
-  .state('list', {
-    url: '/list',
-    templateUrl: 'templates/list.html',
-    controller: 'ListCtrl'
-  })
-
-  .state('jobDetail', {
+  .state('tab.jobDetail', {
     url: '/jobDetail/:id',
-    templateUrl: 'templates/jobDetail.html',
-    controller: 'JobDetailCtrl'
+    views: {
+        'tab-jobs': {
+          templateUrl: 'templates/jobDetail.html',
+          controller: 'JobDetailCtrl'
+        }
+      }
   })
 
   .state('postJobForm', {
@@ -99,7 +125,20 @@ app.factory('JobService',['$http', '$filter',function($http, $filter){
         GetJob: function(jobId){
             
             var object_by_id = $filter('filter')(jobs, {_id: jobId })[0];
+            debugger;
             return object_by_id;
         }
     }
 }]);
+
+app.directive('hideTabs', function($rootScope) {
+    return {
+        restrict: 'A',
+        link: function($scope, $el) {
+            $rootScope.hideTabs = true;
+            $scope.$on('$destroy', function() {
+                $rootScope.hideTabs = false;
+            });
+        }
+    };
+});

@@ -1,0 +1,19 @@
+<!--
+Create tabs with an icon and label, using the tabs-positive style.
+Each tab's child <ion-nav-view> directive will have its own
+navigation history that also transitions its views in and out.
+-->
+<ion-tabs class="tabs-icon-top tabs-color-active-positive">
+
+
+  <!-- Previous Jobs Tab -->
+  <ion-tab title="View Previous Job" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes">
+    <ion-nav-view name="pastJobsShoveler"></ion-nav-view>
+  </ion-tab>
+  
+  <!-- New Jobs Tab -->
+  <ion-tab title="Find New Jobs" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/tab/list">
+    <ion-nav-view name="tab-jobs"></ion-nav-view>
+  </ion-tab>
+
+</ion-tabs>
