@@ -25,9 +25,14 @@ angular.module('starter.controllers', [])
   $scope.user = {};
   $scope.message = "";
   $scope.authenticate = function(){
-    $http.post('http://tunnel.shaneod.net/api/login', $scope.user).then(function(response){
+    $http.post('http://45.55.102.116/api/login', $scope.user).then(function(response){
       
-      $state.go('tab.list');
+      if (response.data.statusCode === 200){
+        $state.go('tab.list');  
+      } else {
+        alert("Error: " + response.data.message);
+      }
+      
       
     });
     console.log($scope.user)

@@ -125,7 +125,6 @@ app.factory('JobService',['$http', '$filter',function($http, $filter){
         GetJob: function(jobId){
             
             var object_by_id = $filter('filter')(jobs, {_id: jobId })[0];
-            debugger;
             return object_by_id;
         }
     }
