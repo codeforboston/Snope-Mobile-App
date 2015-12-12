@@ -7,13 +7,16 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('LoginCtrl', function($scope, $stateParams, $http, $state) {
+.controller('LoginCtrl', function($scope, $stateParams, $http, $state, $rootScope) {
   $scope.user = {};
   $scope.message = "";
   $scope.authenticate = function(){
     $http.post('http://tunnel.shaneod.net/api/login', $scope.user).then(function(response){
       
       if (response.data.statusCode === 200){
+        $rootScope.userId = response.data.userId;
+        $rootScope.userType = response.data.userType;
+
         $state.go('tab.list');  
       } else {
         alert("Error: " + response.data.message);
@@ -27,19 +30,22 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('SignupCtrl', function($scope, $stateParams,$state, $http) {
+.controller('SignupCtrl', function($scope, $stateParams,$state, $http, $rootScope) {
   $scope.user = {};
   // $scope.type = "Shoveler";
 
   $scope.signup = function(){
-    debugger;
 
     $http.post('http://tunnel.shaneod.net/api/users', $scope.user)
     .then(function(response){
       
-      if(response.data.statusCode == 200) {
-        //alert(response.message);
+      if(response.data.statusCode == 200) {        
+        
+        $rootScope.userId = response.data.userId;
+        $rootScope.userType = response.data.userType;
+        debugger;
         $state.go('tab.list');
+
       } else if(response.data.statusCode == 500){
         alert(response.data.message);
       }
@@ -55,7 +61,8 @@ angular.module('starter.controllers', [])
 })
 
 .controller('ListCtrl', ['$state','$scope', 'JobService',function($state, $scope, JobService){
-    JobService.GetJobs().then(function(result){
+    //get open jobs available to shoveler
+    JobService.GetOpenJobsForShoveler().then(function(result){
     $scope.jobs = result;  
     
   });
@@ -64,8 +71,8 @@ angular.module('starter.controllers', [])
 }])
 
 .controller('JobDetailCtrl', [ '$scope','$stateParams', '$log', '$timeout', 'JobService', 'uiGmapGoogleMapApi',function(  $scope, $stateParams, $log, $timeout, JobService, uiGmapGoogleMapApi){
-var jobId = $stateParams.id;
-  $scope.job = JobService.GetJob(jobId);
+  var jobId = $stateParams.id;
+  $scope.job = JobService.GetOpenJob(jobId);
   
   var latitude = parseFloat($scope.job.latitude);
   var longitude = parseFloat($scope.job.longitude);
@@ -82,7 +89,7 @@ var jobId = $stateParams.id;
 }])
 
 
-.controller('PastJobsShovelerCtrl', ['$scope', 'JobService',function($scope, JobService){
+.controller('PastJobsCtrl', ['$scope', 'JobService',function($scope, JobService){
   $scope.jobs = JobService.GetJobs();
 
 }])

@@ -40,12 +40,12 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
     templateUrl: 'templates/tabs.html'
   })
 
-  .state('tab.pastJobsShoveler', {
-    url: '/pastJobsShoveler',
+  .state('tab.pastJobs', {
+    url: '/pastJobs',
     views: {
-      'pastJobsShoveler': {
-        templateUrl: 'templates/pastJobsShoveler.html',
-        controller: 'PastJobsShovelerCtrl'
+      'pastJobs': {
+        templateUrl: 'templates/pastJobs.html',
+        controller: 'PastJobsCtrl'
       }
     }
   })  
@@ -92,11 +92,7 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
     controller: 'PostJobCtrl'
   })
 
-    .state('pastJobsShoveler', {
-      url: '/jobsShoveler',
-      templateUrl: 'templates/pastJobsShoveler.html',
-      controller: 'PastJobsShovelerCtrl'
-    })
+  
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/postJobForm');
@@ -113,8 +109,36 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
 
 app.factory('JobService',['$http', '$filter',function($http, $filter){
     var jobs = []; //Private Variable
+    var openJobs = [];
     return {
-        GetJobs: function(){
+
+        //get all open jobs available to shovelers
+
+        GetOpenJobsForShoveler: function(location){
+          return $http.get('http://tunnel.shaneod.net/api/openJobsForShoveler')
+            .then(function(result){
+              openJobs = result.data;
+              return openJobs;  
+            });   
+        },
+
+        GetOpenJob: function(jobId){
+          var object_by_id = $filter('filter')(openJobs, {_id: jobId })[0];
+          return object_by_id;
+
+        },
+
+        //get all jobs tied to one shoveler
+        GetCompletedJobsForShoveler: function(){
+            
+            return $http.get('http://45.55.102.116/api/completedJobsForShoveler/' + $rootScope.userId)
+            .then(function(result){
+              jobs = result.data;
+              return jobs;  
+            });                                    
+        },
+        //get all jobs tied to one customer
+        GetJobsForCustomer: function(){
             
             return $http.get('http://45.55.102.116/api/jobs')
             .then(function(result){
@@ -122,11 +146,19 @@ app.factory('JobService',['$http', '$filter',function($http, $filter){
               return jobs;  
             });                                    
         },
-        GetJob: function(jobId){
+        //get a specific job tied to one shoveler
+        GetJobForShoveler: function(jobId){
+            
+            var object_by_id = $filter('filter')(jobs, {_id: jobId })[0];
+            return object_by_id;
+        },
+        //get a specific job tied to one customer
+        GetJobsForCustomer: function(jobId){
             
             var object_by_id = $filter('filter')(jobs, {_id: jobId })[0];
             return object_by_id;
         }
+
     }
 }]);
 
