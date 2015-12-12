@@ -111,14 +111,36 @@ var jobId = $stateParams.id;
   
 })
 
-.controller('PostJobCtrl', ['$scope', 'Camera','$http',function($scope, Camera, $http){
+.controller('PostJobCtrl', ['$scope', 'Camera','$http', 'uiGmapGoogleMapApi',function($scope, Camera, $http, uiGmapGoogleMapApi){
 
-  $scope.job = {};
-  $scope.job['latitude'] = 40;
-  $scope.job['longitude'] = 40;
+  $scope.job = {};  
   $scope.job['customerId'] = "56551c3995df308b01000004";
 
 
+  $scope.geocodeAddress = function(){
+    uiGmapGoogleMapApi.then(function(maps) {      
+      //create Google geocoder
+      var geocoder = new google.maps.Geocoder();
+      //gather address information from post job form
+      var addressString = $scope.job.address + ", " + $scope.job.city + ", " + $scope.job.state + ", " + $scope.job.zipCode;
+      //find lat and lng associate with user-entered address
+      geocoder.geocode( {address: addressString }, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+        
+        $scope.job['latitude'] = results[0].geometry.location.G;
+        $scope.job['longitude'] = results[0].geometry.location.K;
+
+        //submit job only after successful geocoding
+        debugger;
+        $scope.postJob();
+                    
+        } else {      
+          alert("We couldn't find your address. Please try again. Error: " + status);
+        }
+      });
+    });
+  };
+  
   
   $scope.getPhoto = function() {
 
@@ -136,7 +158,7 @@ var jobId = $stateParams.id;
 
   }, function(err) {
 
-    // Ruh-roh, something bad happened
+    alert("Error: " + err);
 
   }, cameraOptions);
 
