@@ -2,20 +2,6 @@ angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
-})
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
   $scope.chat = Chats.get($stateParams.chatId);
@@ -25,7 +11,7 @@ angular.module('starter.controllers', [])
   $scope.user = {};
   $scope.message = "";
   $scope.authenticate = function(){
-    $http.post('http://45.55.102.116/api/login', $scope.user).then(function(response){
+    $http.post('http://tunnel.shaneod.net/api/login', $scope.user).then(function(response){
       
       if (response.data.statusCode === 200){
         $state.go('tab.list');  
@@ -46,9 +32,9 @@ angular.module('starter.controllers', [])
   // $scope.type = "Shoveler";
 
   $scope.signup = function(){
+    debugger;
 
-
-    $http.post('http://45.55.102.116/api/users', $scope.user)
+    $http.post('http://tunnel.shaneod.net/api/users', $scope.user)
     .then(function(response){
       
       if(response.data.statusCode == 200) {
@@ -111,11 +97,53 @@ var jobId = $stateParams.id;
   
 })
 
-.controller('PostJobCtrl', ['$scope', 'Camera','$http', 'uiGmapGoogleMapApi',function($scope, Camera, $http, uiGmapGoogleMapApi){
+.controller('PostJobCtrl', ['$scope', 'Camera','$http', 'uiGmapGoogleMapApi', '$cordovaGeolocation',function($scope, Camera, $http, uiGmapGoogleMapApi, $cordovaGeolocation){
 
   $scope.job = {};  
   $scope.job['customerId'] = "56551c3995df308b01000004";
+  alert("call get user location");
+  debugger;
+  $scope.getUserLocation = function(){
+    debugger;
+    var posOptions = {timeout: 10000, enableHighAccuracy: true};
+    $cordovaGeolocation
+      .getCurrentPosition(posOptions)
+      .then(function (position) {
+        var lat  = position.coords.latitude
+        var lng = position.coords.longitude
+        alert("location found");
+        debugger;
+        $scope.getUserAddressFromLocation(lat, lng);
+      }, function(err) {
+        debugger;
+        // error
+      });
+  }
 
+  $scope.getUserAddressFromLocation = function(lat, lng){
+
+    uiGmapGoogleMapApi.then(function(maps) {
+      var latlng = {lat: lat, lng: lng};
+      var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({'location': latlng}, function(results, status) {
+        if (status === google.maps.GeocoderStatus.OK) {
+          
+          if (results[1]) {
+                                  
+            
+          } else {
+            alert('No results found');
+          }
+        } else {
+          alert('Geocoder failed due to: ' + status);
+        }
+      });
+    });
+  }
+
+  
+   
+  
 
   $scope.geocodeAddress = function(){
     uiGmapGoogleMapApi.then(function(maps) {      
@@ -131,7 +159,7 @@ var jobId = $stateParams.id;
         $scope.job['longitude'] = results[0].geometry.location.K;
 
         //submit job only after successful geocoding
-        debugger;
+        
         $scope.postJob();
                     
         } else {      
@@ -166,7 +194,7 @@ var jobId = $stateParams.id;
 
   $scope.postJob = function(){
 
-    $http.post('http://45.55.102.116/api/jobs', $scope.job)
+    $http.post('http://tunnel.shaneod.net/api/jobs', $scope.job)
     .then(function(response){
       
         alert("post success!");        
@@ -177,5 +205,6 @@ var jobId = $stateParams.id;
       }                    
     });
   }
+
 
 }]);

@@ -9,7 +9,7 @@
     <input type="text" placeholder="Last Name" ng-model="user.lastName">
   </label>
   <label class="item item-input">
-    <input type="text" placeholder="Username" ng-model="user.username">
+    <input type="text" placeholder="Email" ng-model="user.email">
   </label>
   <label class="item item-input">
     <input type="password" placeholder="Password" ng-model="user.password">
@@ -27,24 +27,8 @@
      I am old enough to work legally
   </li> 
   <h4>Select Account Type</h4>
-  <label class="item item-radio">
-    <input type="radio" name="group">
-    <div class="radio-content">
-      <div class="item-content">
-        I want to shovel
-      </div>
-      <i class="radio-icon ion-checkmark"></i>
-    </div>
-  </label>
-  <label class="item item-radio">
-    <input type="radio" name="group">
-    <div class="radio-content">
-      <div class="item-content">
-        I want to hire a shoveler
-      </div>
-      <i class="radio-icon ion-checkmark"></i>
-    </div>
-  </label>
+  <ion-radio ng-model="user.type" ng-value="shoveler">I want to shovel snow</ion-radio>
+  <ion-radio ng-model="user.type" ng-value="customer">I want to hire a shoveler</ion-radio>
   <button class="button button-block button-positive" ng-click="signup()">Sign Up</button>
 </div>
 
