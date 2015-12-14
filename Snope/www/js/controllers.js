@@ -8,14 +8,16 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('LoginCtrl', function($scope, $stateParams, $http, $state, apiAddress) {
+.controller('LoginCtrl', function($scope, $stateParams, $http, $state, apiAddress, userService) {
   $scope.user = {};
   $scope.message = "";
   $scope.authenticate = function(){
+    debugger;
     $http.post(apiAddress+'api/login', $scope.user).then(function(response){
 
       
       if (response.data.statusCode === 200){
+        debugger;
         var userObject = {};
         userObject['userId'] = response.data.userId;
         userObject['userType'] = response.data.userType;      
