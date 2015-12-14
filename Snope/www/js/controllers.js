@@ -7,19 +7,13 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-<<<<<<< HEAD
-.controller('LoginCtrl', function($scope, $stateParams, $http, $state, $rootScope, userService) {
-  $scope.user = {};
-  $scope.message = "";
-  $scope.authenticate = function(){
-    $http.post('http://45.55.102.116/api/login', $scope.user).then(function(response){
-=======
+
 .controller('LoginCtrl', function($scope, $stateParams, $http, $state, $rootScope, apiAddress) {
   $scope.user = {};
   $scope.message = "";
   $scope.authenticate = function(){
     $http.post(apiAddress+'api/login', $scope.user).then(function(response){
->>>>>>> eee40912486fe41a4208571c487843a0a6d208b3
+
       
       if (response.data.statusCode === 200){
         var userObject = {};
