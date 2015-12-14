@@ -7,11 +7,19 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
+<<<<<<< HEAD
 .controller('LoginCtrl', function($scope, $stateParams, $http, $state, $rootScope, userService) {
   $scope.user = {};
   $scope.message = "";
   $scope.authenticate = function(){
     $http.post('http://45.55.102.116/api/login', $scope.user).then(function(response){
+=======
+.controller('LoginCtrl', function($scope, $stateParams, $http, $state, $rootScope, apiAddress) {
+  $scope.user = {};
+  $scope.message = "";
+  $scope.authenticate = function(){
+    $http.post(apiAddress+'api/login', $scope.user).then(function(response){
+>>>>>>> eee40912486fe41a4208571c487843a0a6d208b3
       
       if (response.data.statusCode === 200){
         var userObject = {};
@@ -35,13 +43,15 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('SignupCtrl', function($scope, $stateParams,$state, $http, $rootScope) {
+.controller('SignupCtrl', function($scope, $stateParams,$state, $http, $rootScope, apiAddress) {
   $scope.user = {};
   // $scope.type = "Shoveler";
 
   $scope.signup = function(){
 
-    $http.post('http://45.55.102.116/api/users', $scope.user)
+
+    $http.post(apiAddress+'api/users', $scope.user)
+
     .then(function(response){
       
       if(response.data.statusCode == 200) {        
@@ -116,7 +126,7 @@ angular.module('starter.controllers', [])
   
 })
 
-.controller('PostJobCtrl', ['$scope', 'Camera','$http', 'uiGmapGoogleMapApi', '$cordovaGeolocation',function($scope, Camera, $http, uiGmapGoogleMapApi, $cordovaGeolocation){
+.controller('PostJobCtrl', ['$scope', 'Camera','$http', 'uiGmapGoogleMapApi', '$cordovaGeolocation', 'apiAddress', function($scope, Camera, $http, uiGmapGoogleMapApi, $cordovaGeolocation, apiAddress){
 
   $scope.job = {};  
   $scope.job['customerId'] = "56551c3995df308b01000004";
@@ -159,9 +169,6 @@ angular.module('starter.controllers', [])
       });
     });
   }
-
-  
-   
   
 
   $scope.geocodeAddress = function(){
@@ -213,7 +220,8 @@ angular.module('starter.controllers', [])
 
   $scope.postJob = function(){
 
-    $http.post('http://45.55.102.116/api/jobs', $scope.job)
+
+    $http.post(apiAddress+'api/jobs', $scope.job)
     .then(function(response){
       
         alert("post success!");        

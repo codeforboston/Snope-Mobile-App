@@ -6,6 +6,8 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'uiGmapgoogle-maps', 'ngCordova'])
+.constant("apiAddress", "http://45.55.102.116/")
+//.constant("apiAddress", "http://tunnel.shaneod.net/")
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -107,7 +109,7 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
     });
 });
 
-app.factory('JobService',['$http', '$filter',function($http, $filter){
+app.factory('JobService',['$http', '$filter', 'apiAddress',function($http, $filter, apiAddress){
     var jobs = []; //Private Variable
     var openJobs = [];
     return {
@@ -115,7 +117,8 @@ app.factory('JobService',['$http', '$filter',function($http, $filter){
         //get all open jobs available to shovelers
 
         GetOpenJobsForShoveler: function(location){
-          return $http.get('http://45.55.102.116/api/openJobsForShoveler')
+
+          return $http.get(apiAddress+'api/openJobsForShoveler')
             .then(function(result){
               openJobs = result.data;
               return openJobs;  
@@ -131,7 +134,8 @@ app.factory('JobService',['$http', '$filter',function($http, $filter){
         //get all jobs tied to one shoveler
         GetCompletedJobsForShoveler: function(userId){
             
-            return $http.get('http://45.55.102.116/api/completedJobsForShoveler/' + userId)
+
+            return $http.get(apiAddress+'api/completedJobsForShoveler/' + userId)
             .then(function(result){
               jobs = result.data;
               return jobs;  
@@ -140,7 +144,7 @@ app.factory('JobService',['$http', '$filter',function($http, $filter){
         //get all jobs tied to one customer
         GetJobsForCustomer: function(){
             
-            return $http.get('http://45.55.102.116/api/jobs')
+            return $http.get(apiAddress+'api/jobs')
             .then(function(result){
               jobs = result.data;
               return jobs;  
