@@ -3,12 +3,12 @@ angular.module('starter.controllers', [])
 .controller('DashCtrl', function($scope) {})
 
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
+.controller('InProgressCtrl', function($scope, $stateParams, Chats) {
+  
 })
 
 
-.controller('LoginCtrl', function($scope, $stateParams, $http, $state, $rootScope, apiAddress) {
+.controller('LoginCtrl', function($scope, $stateParams, $http, $state, apiAddress) {
   $scope.user = {};
   $scope.message = "";
   $scope.authenticate = function(){
@@ -21,8 +21,7 @@ angular.module('starter.controllers', [])
         userObject['userType'] = response.data.userType;      
 
         userService.setUser(userObject);
-        var serviceUser = userService.getUser();
-        debugger;        
+            
 
         $state.go('tab.list');  
       } else {
@@ -37,7 +36,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('SignupCtrl', function($scope, $stateParams,$state, $http, $rootScope, apiAddress) {
+.controller('SignupCtrl', function($scope, $stateParams,$state, $http, apiAddress) {
   $scope.user = {};
   // $scope.type = "Shoveler";
 
@@ -50,9 +49,12 @@ angular.module('starter.controllers', [])
       
       if(response.data.statusCode == 200) {        
         
-        $rootScope.userId = response.data.userId;
-        $rootScope.userType = response.data.userType;
-        debugger;
+        var userObject = {};
+        userObject['userId'] = response.data.userId;
+        userObject['userType'] = response.data.userType;      
+
+        userService.setUser(userObject);
+
         $state.go('tab.list');
 
       } else if(response.data.statusCode == 500){
@@ -103,7 +105,7 @@ angular.module('starter.controllers', [])
   var userId = user.userId;
   JobService.GetCompletedJobsForShoveler(userId).then(function(result){
     $scope.jobs = result;
-    debugger;
+    
   });
   
 

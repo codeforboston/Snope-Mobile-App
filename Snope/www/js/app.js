@@ -65,7 +65,7 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
   .state('tab.pastJobs', {
     url: '/pastJobs',
     views: {
-      'pastJobs': {
+      'tab-pastJobs': {
         templateUrl: 'templates/pastJobs.html',
         controller: 'PastJobsCtrl'
       }
@@ -78,6 +78,16 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
         'tab-jobs': {
           templateUrl: 'templates/list.html',
           controller: 'ListCtrl'
+        }
+      }
+  })  
+
+  .state('tab.inProgress', {
+    url: '/inProgress',
+    views: {
+        'tab-inProgress': {
+          templateUrl: 'templates/inProgress.html',
+          controller: 'InProgressCtrl'
         }
       }
   })  
