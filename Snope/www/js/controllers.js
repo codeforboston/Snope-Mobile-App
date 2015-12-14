@@ -7,15 +7,20 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('LoginCtrl', function($scope, $stateParams, $http, $state, $rootScope) {
+.controller('LoginCtrl', function($scope, $stateParams, $http, $state, $rootScope, userService) {
   $scope.user = {};
   $scope.message = "";
   $scope.authenticate = function(){
-    $http.post('http://tunnel.shaneod.net/api/login', $scope.user).then(function(response){
+    $http.post('http://45.55.102.116/api/login', $scope.user).then(function(response){
       
       if (response.data.statusCode === 200){
-        $rootScope.userId = response.data.userId;
-        $rootScope.userType = response.data.userType;
+        var userObject = {};
+        userObject['userId'] = response.data.userId;
+        userObject['userType'] = response.data.userType;      
+
+        userService.setUser(userObject);
+        var serviceUser = userService.getUser();
+        debugger;        
 
         $state.go('tab.list');  
       } else {
@@ -36,7 +41,7 @@ angular.module('starter.controllers', [])
 
   $scope.signup = function(){
 
-    $http.post('http://tunnel.shaneod.net/api/users', $scope.user)
+    $http.post('http://45.55.102.116/api/users', $scope.user)
     .then(function(response){
       
       if(response.data.statusCode == 200) {        
@@ -89,8 +94,15 @@ angular.module('starter.controllers', [])
 }])
 
 
-.controller('PastJobsCtrl', ['$scope', 'JobService',function($scope, JobService){
-  $scope.jobs = JobService.GetJobs();
+.controller('PastJobsCtrl', ['$scope', 'JobService','userService',function($scope, JobService, userService){
+  var user = userService.getUser();
+  var userId = user.userId;
+  JobService.GetCompletedJobsForShoveler(userId).then(function(result){
+    $scope.jobs = result;
+    debugger;
+  });
+  
+
 
 }])
 
@@ -201,7 +213,7 @@ angular.module('starter.controllers', [])
 
   $scope.postJob = function(){
 
-    $http.post('http://tunnel.shaneod.net/api/jobs', $scope.job)
+    $http.post('http://45.55.102.116/api/jobs', $scope.job)
     .then(function(response){
       
         alert("post success!");        

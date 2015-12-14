@@ -49,6 +49,24 @@ angular.module('starter.services', [])
   };
 })
 
+.service('userService', function() {
+  var user = {};
+
+  var setUser = function(userArgument) {
+      user = userArgument;
+  };
+
+  var getUser = function(){
+      return user;
+  };
+
+  return {
+    setUser: setUser,
+    getUser: getUser
+  };
+
+})
+
 .factory('Camera', ['$q', function($q) {
 
   return {

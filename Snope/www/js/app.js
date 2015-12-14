@@ -115,7 +115,7 @@ app.factory('JobService',['$http', '$filter',function($http, $filter){
         //get all open jobs available to shovelers
 
         GetOpenJobsForShoveler: function(location){
-          return $http.get('http://tunnel.shaneod.net/api/openJobsForShoveler')
+          return $http.get('http://45.55.102.116/api/openJobsForShoveler')
             .then(function(result){
               openJobs = result.data;
               return openJobs;  
@@ -129,9 +129,9 @@ app.factory('JobService',['$http', '$filter',function($http, $filter){
         },
 
         //get all jobs tied to one shoveler
-        GetCompletedJobsForShoveler: function(){
+        GetCompletedJobsForShoveler: function(userId){
             
-            return $http.get('http://45.55.102.116/api/completedJobsForShoveler/' + $rootScope.userId)
+            return $http.get('http://45.55.102.116/api/completedJobsForShoveler/' + userId)
             .then(function(result){
               jobs = result.data;
               return jobs;  
