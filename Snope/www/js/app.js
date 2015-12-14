@@ -1,3 +1,23 @@
+angular.module('ui.gravatar').config([
+  'gravatarServiceProvider', function(gravatarServiceProvider) {
+    gravatarServiceProvider.defaults = {
+      size     : 100,
+      "default": 'mm'  // Mystery man as default for missing avatars
+    };
+
+    // Use https endpoint
+    //gravatarServiceProvider.secure = true;
+
+    // Force protocol http, else will be file on Cordova, which will fail
+    gravatarServiceProvider.protocol = 'http';
+
+    // Override URL generating function
+    //gravatarServiceProvider.urlFunc = function(options) {
+      // Code to generate custom URL
+    //};
+  }
+]);
+
 // Ionic Starter App
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
@@ -5,7 +25,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'uiGmapgoogle-maps', 'ngCordova'])
+var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'uiGmapgoogle-maps', 'ngCordova', 'ui.gravatar'])
 .constant("apiAddress", "http://45.55.102.116/")
 //.constant("apiAddress", "http://tunnel.shaneod.net/")
 
