@@ -3,7 +3,7 @@ angular.module('starter.controllers', [])
 .controller('DashCtrl', function($scope) {})
 
 
-.controller('InProgressCtrl', function($scope, $stateParams, Chats) {
+.controller('InProgressCtrl', function($scope, $stateParams) {
   
 })
 

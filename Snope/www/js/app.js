@@ -107,7 +107,7 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
   
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/postJobForm');
+  $urlRouterProvider.otherwise('/login');
 
 
 })
@@ -119,62 +119,7 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
     });
 });
 
-app.factory('JobService',['$http', '$filter', 'apiAddress',function($http, $filter, apiAddress){
-    var jobs = []; //Private Variable
-    var openJobs = [];
-    return {
 
-        //get all open jobs available to shovelers
-
-        GetOpenJobsForShoveler: function(location){
-
-          return $http.get(apiAddress+'api/openJobsForShoveler')
-            .then(function(result){
-              openJobs = result.data;
-              return openJobs;  
-            });   
-        },
-
-        GetOpenJob: function(jobId){
-          var object_by_id = $filter('filter')(openJobs, {_id: jobId })[0];
-          return object_by_id;
-
-        },
-
-        //get all jobs tied to one shoveler
-        GetCompletedJobsForShoveler: function(userId){
-            
-
-            return $http.get(apiAddress+'api/completedJobsForShoveler/' + userId)
-            .then(function(result){
-              jobs = result.data;
-              return jobs;  
-            });                                    
-        },
-        //get all jobs tied to one customer
-        GetJobsForCustomer: function(){
-            
-            return $http.get(apiAddress+'api/jobs')
-            .then(function(result){
-              jobs = result.data;
-              return jobs;  
-            });                                    
-        },
-        //get a specific job tied to one shoveler
-        GetJobForShoveler: function(jobId){
-            
-            var object_by_id = $filter('filter')(jobs, {_id: jobId })[0];
-            return object_by_id;
-        },
-        //get a specific job tied to one customer
-        GetJobsForCustomer: function(jobId){
-            
-            var object_by_id = $filter('filter')(jobs, {_id: jobId })[0];
-            return object_by_id;
-        }
-
-    }
-}]);
 
 app.directive('hideTabs', function($rootScope) {
     return {

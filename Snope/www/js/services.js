@@ -1,53 +1,5 @@
 angular.module('starter.services', [])
 
-.factory('Chats', function() {
-  // Might use a resource here that returns a JSON array
-
-  // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'img/ben.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'img/max.png'
-  }, {
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/adam.jpg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'img/perry.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'img/mike.png'
-  }];
-
-  return {
-    all: function() {
-      return chats;
-    },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
-        }
-      }
-      return null;
-    }
-  };
-})
 
 .service('userService', function() {
   var user = {};
@@ -66,6 +18,74 @@ angular.module('starter.services', [])
   };
 
 })
+
+.factory('JobService',['$http', '$filter', 'apiAddress',function($http, $filter, apiAddress){
+    var openJobs = [];
+    var inProgressJobs = []; 
+    var completedJobs = [];
+    return {
+
+        //get all open jobs available to shovelers
+
+        GetOpenJobsForShoveler: function(location){
+
+          return $http.get(apiAddress+'api/openJobsForShoveler')
+            .then(function(result){
+              openJobs = result.data;
+              return openJobs;  
+            });   
+        },
+        //GET for a specific job
+        GetJob: function(jobId, jobs){
+          var object_by_id = $filter('filter')(jobs, {_id: jobId })[0];
+          return object_by_id;
+
+        },
+        
+
+        //get all jobs tied to one shoveler
+        GetCompletedJobsForShoveler: function(userId){
+            
+
+            return $http.get(apiAddress+'api/completedJobsForShoveler/' + userId)
+            .then(function(result){
+              completedJobs = result.data;
+              return completedJobs;  
+            });                                    
+        },
+
+
+        //get in-progress jobs for a shoveler
+        GetInProgressJobsForShoveler: function(userId){
+            
+
+            return $http.get(apiAddress+'api/inProgressJobsForShoveler/' + userId)
+            .then(function(result){
+              inProgressJobs = result.data;
+              return inProgressJobs;  
+            });                                    
+        },
+
+
+        //get all jobs tied to one customer
+        GetJobsForCustomer: function(){
+            
+            return $http.get(apiAddress+'api/jobs')
+            .then(function(result){
+              jobs = result.data;
+              return jobs;  
+            });                                    
+        },
+        
+        //get a specific job tied to one customer
+        GetJobsForCustomer: function(jobId){
+            
+            var object_by_id = $filter('filter')(jobs, {_id: jobId })[0];
+            return object_by_id;
+        }
+
+    }
+}])
 
 .factory('Camera', ['$q', function($q) {
 
