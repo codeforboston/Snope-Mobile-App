@@ -36,7 +36,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('SignupCtrl', function($scope, $stateParams,$state, $http, apiAddress) {
+.controller('SignupCtrl', function($scope, $stateParams,$state, $http, apiAddress, userService) {
   $scope.user = {};
   // $scope.type = "Shoveler";
 
