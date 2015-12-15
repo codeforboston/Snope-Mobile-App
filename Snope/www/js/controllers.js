@@ -22,8 +22,12 @@ angular.module('starter.controllers', [])
 
         userService.setUser(userObject);
 
-
-        $state.go('tab.list');
+        if (response.data.userType == "shoveler") {
+          $state.go('tab.list');
+        } else if (response.data.userType == "customer") {
+          $state.go('tab.postJobForm');
+        }
+        
       } else {
         alert("Error: " + response.data.message);
       }
@@ -55,7 +59,13 @@ angular.module('starter.controllers', [])
 
         userService.setUser(userObject);
 
-        $state.go('tab.list');
+        if (response.data.userType == "shoveler") {
+          $state.go('tab.list');
+        } else if (response.data.userType == "customer") {
+          $state.go('tab.postJobForm');
+        }
+
+        
 
       } else if(response.data.statusCode == 500){
         alert(response.data.message);
