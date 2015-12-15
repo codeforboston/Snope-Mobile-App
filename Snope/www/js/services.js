@@ -97,7 +97,7 @@ angular.module('starter.services', [])
   }
 }])
 
-.factory('Localstorage', ['$window', function($window) {
+.factory('LocalStorage', ['$window', function($window) {
   return {
     set: function(key, value) {
       $window.localStorage[key] = value;
