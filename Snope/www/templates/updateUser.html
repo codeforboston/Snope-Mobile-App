@@ -9,7 +9,7 @@
     <input type="text" placeholder="Last Name" ng-model="user.lastName">
   </label>
   <label class="item item-input">
-    <input type="text" placeholder="{{user.email}}" ng-model="user.email">
+    <input type="text" placeholder="{{user_data.email}}" ng-model="user.email">
   </label>
   <label class="item item-input">
     <input type="password" placeholder="Password" ng-model="user.password">
@@ -29,7 +29,7 @@
   <h4>Select Account Type</h4>
   <ion-radio ng-model="user.type" ng-value="'shoveler'">I want to shovel snow</ion-radio>
   <ion-radio ng-model="user.type" ng-value="'customer'">I want to hire a shoveler</ion-radio>
-  <button class="button button-block button-positive" ng-click="updateUser()">Update my infromation</button>
+  <button class="button button-block button-positive" ng-click="update()">Update my infromation</button>
 </div>
 
 </ion-content>
