@@ -148,7 +148,7 @@ angular.module('starter.controllers', [])
       .then(function (position) {
         var lat  = position.coords.latitude
         var lng = position.coords.longitude
-        f
+        
         
         $scope.getUserAddressFromLocation(lat, lng);
       }, function(err) {
