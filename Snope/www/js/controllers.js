@@ -65,6 +65,30 @@ angular.module('starter.controllers', [])
   };
 })
 
+.controller('UpdateUserCtrl', function($scope, $stateParams,$state, $http, apiAddress) {
+  
+  $scope.update = function(){
+    $http.post(apiAddress+'api/users', $scope.user)
+    .then(function(response){
+      if(response.data.statusCode == 200) {        
+        
+        var userObject = {};
+        userObject['userId'] = response.data.userId;
+        userObject['userType'] = response.data.userType;      
+
+        userService.setUser(userObject);
+
+        $state.go('tab.list');
+
+      } else if(response.data.statusCode == 500){
+        alert(response.data.message);
+      }
+    });
+
+  };
+})
+
+
 .controller('GlobalTabCtrl', function($scope, userService, $state) {
   $scope.setLink = function() {
     var user = userService.getUser();

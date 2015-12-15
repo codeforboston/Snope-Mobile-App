@@ -1,0 +1,36 @@
+<ion-view view-title="Login" hide-tabs>
+  <ion-content> 
+<div class="list list-inset">
+  <h1>Update Information</h1>
+  <label class="item item-input">
+    <input type="text" placeholder="First Name" ng-model="user.firstName">
+  </label>
+  <label class="item item-input">
+    <input type="text" placeholder="Last Name" ng-model="user.lastName">
+  </label>
+  <label class="item item-input">
+    <input type="text" placeholder="{{user.email}}" ng-model="user.email">
+  </label>
+  <label class="item item-input">
+    <input type="password" placeholder="Password" ng-model="user.password">
+  </label>
+  <label class="item item-input">
+    <input type="text" placeholder="Phone Number" ng-model="user.phoneNumber">
+  </label>
+  <label class="item item-input">
+    <input type="text" placeholder="Address" ng-model="user.address">
+  </label> 
+  <!--<li class="item item-checkbox">
+     <label class="checkbox">
+       <input type="checkbox">
+     </label>
+     I am old enough to work legally
+  </li> -->
+  <h4>Select Account Type</h4>
+  <ion-radio ng-model="user.type" ng-value="'shoveler'">I want to shovel snow</ion-radio>
+  <ion-radio ng-model="user.type" ng-value="'customer'">I want to hire a shoveler</ion-radio>
+  <button class="button button-block button-positive" ng-click="updateUser()">Update my infromation</button>
+</div>
+
+</ion-content>
+  </ion-view>
