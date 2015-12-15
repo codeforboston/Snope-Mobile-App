@@ -1,20 +1,20 @@
 angular.module('starter.services', [])
 
 
-.service('userService', function() {
+.factory('userService', function() {
   var user = {};
 
-  var setUser = function(userArgument) {
-      user = userArgument;
-  };
+  
 
-  var getUser = function(){
-      return user;
-  };
+  
 
   return {
-    setUser: setUser,
-    getUser: getUser
+    setUser: function(userArgument) {
+      user = userArgument;
+  },
+    getUser: function(){      
+      return user;
+  }
   };
 
 })
@@ -36,10 +36,12 @@ angular.module('starter.services', [])
             });   
         },
         //GET for a specific job
-        GetJob: function(jobId, jobs){
-          var object_by_id = $filter('filter')(jobs, {_id: jobId })[0];
-          return object_by_id;
-
+        GetJob: function(jobId){
+          return $http.get(apiAddress+'api/jobs/' + jobId)
+            .then(function(result){
+              openJobs = result.data;
+              return openJobs;  
+            });   
         },
         
 
@@ -76,13 +78,7 @@ angular.module('starter.services', [])
               return jobs;  
             });                                    
         },
-        
-        //get a specific job tied to one customer
-        GetJobsForCustomer: function(jobId){
-            
-            var object_by_id = $filter('filter')(jobs, {_id: jobId })[0];
-            return object_by_id;
-        }
+                
 
     }
 }])

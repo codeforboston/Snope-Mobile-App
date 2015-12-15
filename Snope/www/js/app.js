@@ -26,8 +26,8 @@ angular.module('ui.gravatar').config([
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'uiGmapgoogle-maps', 'ngCordova', 'ui.gravatar'])
-.constant("apiAddress", "http://45.55.102.116/")
-//.constant("apiAddress", "http://tunnel.shaneod.net/")
+// .constant("apiAddress", "http://45.55.102.116/")
+.constant("apiAddress", "http://tunnel.shaneod.net/")
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -67,7 +67,8 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
     views: {
       'tab-pastJobs': {
         templateUrl: 'templates/pastJobs.html',
-        controller: 'PastJobsCtrl'
+        //needs to be past jobs when endpoint is linked up
+        controller: 'ListCtrl'
       }
     }
   })  
@@ -87,7 +88,8 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
     views: {
         'tab-inProgress': {
           templateUrl: 'templates/inProgress.html',
-          controller: 'InProgressCtrl'
+          //needs to be in-progress jobs when endpoint is linked up
+          controller: 'ListCtrl'
         }
       }
   })  
@@ -107,7 +109,6 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
     controller: 'SignupCtrl'
   })
   
-
   .state('tab.jobDetail', {
     url: '/jobDetail/:id',
     views: {
@@ -118,19 +119,22 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
       }
   })
 
-  .state('postJobForm', {
+  .state('tab.postJobForm', {
     url: '/postJobForm',
-    templateUrl: 'templates/postJobForm.html',
-    controller: 'PostJobCtrl'
+    views: {
+      'tab-jobs': {
+        templateUrl: 'templates/postJobForm.html',
+        controller: 'PostJobCtrl'
+      }
+    }
   })
-
-  
-
+ 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
 
 
 })
+
 .config(function(uiGmapGoogleMapApiProvider) {
     uiGmapGoogleMapApiProvider.configure({
             key: 'AIzaSyDu3ACzX5UEHrISWJyIDEYjN40IppUvbbM',
@@ -138,7 +142,6 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
         libraries: 'weather,geometry,visualization'
     });
 });
-
 
 
 app.directive('hideTabs', function($rootScope) {

@@ -1,7 +1,5 @@
-<ion-view view-title="Jobs" hide-tabs>
-
-
-<ion-content>
+<ion-view view-title="Find Jobs" hide-tabs>
+  <ion-content>
     <div class="list card" ng-repeat="job in jobs">
       <div class="row">                    
           <div class="col col-70">
@@ -11,22 +9,14 @@
             <p>Notes: {{job.notes}}</p>        
         </div>
         <div class="col col-30 pull-right">
-          <img src="http://placehold.it/100x100" class="pull-right">
+          <img src="http://dir.coolclips.com/clipart/150/vgjm/tf05367/CoolClips_vc107580.jpg" class="pull-right" class="snow-list-image">
         </div>
       </div>
       <a href="#/tab/jobDetail/{{job._id}}">
         <button class="button button-full button-balanced">
-            <h2>Accept</h2>
+            Accept
           </button>        
-      </a>
-          
-                                     
+      </a>                                               
     </div> 
-
   </ion-content> 
-
-
-
-</ion-view>
-
-     
+</ion-view>     

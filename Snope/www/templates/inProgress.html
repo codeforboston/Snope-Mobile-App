@@ -1,8 +1,30 @@
-<ion-view view-title="Jobs" hide-tabs>
+<ion-view view-title="In Progress" hide-tabs>
 
 
 <ion-content>
-    <h1>I am in progress</h1>
+    <div class="list card" ng-repeat="job in jobs">
+      <div class="row">                    
+          <div class="col col-70">
+            <p>Phone: {{job.phoneNumber}}</p>
+            <p>Address: {{job.address}}</p>
+            <p>Offering: {{job.price}}</p>
+            <p>Notes: {{job.notes}}</p>        
+        </div>
+        <div class="col col-30 pull-right">
+          <img src="http://dir.coolclips.com/clipart/150/vgjm/tf05367/CoolClips_vc107580.jpg" class="pull-right">
+        </div>
+      </div>
+      
+        <button class="button button-full button-balanced">
+            Mark Completed
+          </button>    
+          <!-- <a href="mailto:customerservice@snope.com?subject=Report from Job #{{job.id}}" class="item"> -->
+          <button class="button  button-assertive button-full">
+            Report Issue
+          <!-- </button> -->
+        </a>    
+                                                     
+    </div> 
 
   </ion-content> 
 

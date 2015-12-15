@@ -4,3 +4,12 @@
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
+
+.snow-list-image {
+	max-height: 100%;
+	max-width: 100%;
+}
+
+a {
+	text-decoration: none;
+}

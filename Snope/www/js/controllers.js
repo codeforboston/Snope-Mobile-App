@@ -12,18 +12,19 @@ angular.module('starter.controllers', [])
   $scope.user = {};
   $scope.message = "";
   $scope.authenticate = function(){
-    debugger;
+    
     $http.post(apiAddress+'api/login', $scope.user).then(function(response){
 
       
       if (response.data.statusCode === 200){
-        debugger;
+        
         var userObject = {};
         userObject['userId'] = response.data.userId;
         userObject['userType'] = response.data.userType;      
 
         userService.setUser(userObject);
-            
+        
+          
 
         $state.go('tab.list');  
       } else {
@@ -67,10 +68,19 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+.controller('GlobalTabCtrl', function($scope, userService, $state) {
+  $scope.setLink = function() {
+    var user = userService.getUser();
+        
+
+    if (user.userType == "shoveler") {
+      $state.go("tab.list");
+    } else if (user.userType == "customer") {
+      $state.go("tab.postJobForm");
+    }
+
+  }
+  
 })
 
 .controller('ListCtrl', ['$state','$scope', 'JobService',function($state, $scope, JobService){
@@ -83,9 +93,12 @@ angular.module('starter.controllers', [])
 
 }])
 
-.controller('JobDetailCtrl', [ '$scope','$stateParams', '$log', '$timeout', 'JobService', 'uiGmapGoogleMapApi',function(  $scope, $stateParams, $log, $timeout, JobService, uiGmapGoogleMapApi){
+.controller('JobDetailCtrl', [ '$scope','$stateParams', '$log', '$timeout', 'JobService', 'uiGmapGoogleMapApi', 'userService',function(  $scope, $stateParams, $log, $timeout, JobService, uiGmapGoogleMapApi, userService){
   var jobId = $stateParams.id;
-  $scope.job = JobService.GetOpenJob(jobId);
+  $scope.job = JobService.GetJob(jobId);
+
+  debugger;
+  
   
   var latitude = parseFloat($scope.job.latitude);
   var longitude = parseFloat($scope.job.longitude);
@@ -110,36 +123,33 @@ angular.module('starter.controllers', [])
     
   });
   
-
-
 }])
 
-.controller('TabCtrl', function($state, $scope){
+.controller('TabCtrl', function($state, $scope, $rootScope){
   var hideTabsStates = ['login']; 
 
     $rootScope.$on('$ionicView.beforeEnter', function () {
         $rootScope.hideTabs = ~hideTabsStates.indexOf($state.current.name)
     });
-
   
 })
 
-.controller('PostJobCtrl', ['$scope', 'Camera','$http', 'uiGmapGoogleMapApi', '$cordovaGeolocation', 'apiAddress', function($scope, Camera, $http, uiGmapGoogleMapApi, $cordovaGeolocation, apiAddress){
+.controller('PostJobCtrl', ['$scope', 'Camera','$http', 'uiGmapGoogleMapApi', '$cordovaGeolocation', 'apiAddress', 'userService', function($scope, Camera, $http, uiGmapGoogleMapApi, $cordovaGeolocation, apiAddress, userService){
 
   $scope.job = {};  
-  $scope.job['customerId'] = "56551c3995df308b01000004";
-  alert("call get user location");
-  debugger;
+  var user = userService.getUser();
+  $scope.job['customerId'] = user.userId;
+  
   $scope.getUserLocation = function(){
-    debugger;
+    
     var posOptions = {timeout: 10000, enableHighAccuracy: true};
     $cordovaGeolocation
       .getCurrentPosition(posOptions)
       .then(function (position) {
         var lat  = position.coords.latitude
         var lng = position.coords.longitude
-        alert("location found");
-        debugger;
+        f
+        
         $scope.getUserAddressFromLocation(lat, lng);
       }, function(err) {
         debugger;
@@ -222,7 +232,7 @@ angular.module('starter.controllers', [])
     $http.post(apiAddress+'api/jobs', $scope.job)
     .then(function(response){
       
-        alert("post success!");        
+      $state.go('tab.inProgress')       
       if(response.data.statusCode == 200) {      
       
       } else if(response.data.statusCode == 500){
