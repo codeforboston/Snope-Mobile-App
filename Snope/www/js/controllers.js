@@ -22,12 +22,15 @@ angular.module('starter.controllers', [])
 
         userService.setUser(userObject);
 
-        if (response.data.userType == "shoveler") {
-          $state.go('tab.list');
-        } else if (response.data.userType == "customer") {
-          $state.go('tab.postJobForm');
+
+        if (userObject.userType == "shoveler") {
+          $state.go("tab.list");
+        } else if (userObject.userType == "customer") {
+          $state.go("tab.postJobForm");
+        } else {
+          alert("userType not correct");
         }
-        
+
       } else {
         alert("Error: " + response.data.message);
       }
@@ -59,13 +62,15 @@ angular.module('starter.controllers', [])
 
         userService.setUser(userObject);
 
-        if (response.data.userType == "shoveler") {
-          $state.go('tab.list');
-        } else if (response.data.userType == "customer") {
-          $state.go('tab.postJobForm');
+
+        if (userObject.userType == "shoveler") {
+          $state.go("tab.list");
+        } else if (userObject.userType == "customer") {
+          $state.go("tab.postJobForm");
+        } else {
+          alert("userType not correct");
         }
 
-        
 
       } else if(response.data.statusCode == 500){
         alert(response.data.message);
@@ -75,29 +80,29 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('UpdateUserCtrl', function($scope, $stateParams,$state, $http, apiAddress) {
-  
+.controller('UpdateUserCtrl', function($scope, $stateParams,$state, $http, apiAddress, userService, user_data) {
+  // user_data is loaded by a resolve (router)
+  $scope.user = user_data.data
   $scope.update = function(){
-    $http.post(apiAddress+'api/users', $scope.user)
+    $http.put(apiAddress+'api/users/'+$scope.user._id, $scope.user)
     .then(function(response){
-      if(response.data.statusCode == 200) {        
-        
-        var userObject = {};
-        userObject['userId'] = response.data.userId;
-        userObject['userType'] = response.data.userType;      
-
-        userService.setUser(userObject);
-
-        $state.go('tab.list');
-
-      } else if(response.data.statusCode == 500){
-        alert(response.data.message);
+      if(response.status == 200 && response.data.message == "User successfully updated!") {
+        var user = userService.getUser();
+        user.userType = $scope.user.type
+        userService.setUser(user);
+        if (user.userType == "shoveler") {
+          $state.go("tab.list");
+        } else if (user.userType == "customer") {
+          $state.go("tab.postJobForm");
+        } else {
+          alert("userType not correct");
+        }
+      } else {
+        alert(response);
       }
     });
-
   };
 })
-
 
 .controller('GlobalTabCtrl', function($scope, userService, $state) {
   $scope.setLink = function() {

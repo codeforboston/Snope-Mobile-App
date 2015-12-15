@@ -1,7 +1,6 @@
 angular.module('starter.services', [])
 
-
-.factory('userService', function() {
+.factory('userService', function($http, $q, apiAddress) {
     var user = {};
     var setUser = function(userArgument) {
         user = userArgument;
@@ -11,9 +10,19 @@ angular.module('starter.services', [])
         return user;
     };
 
+    var getUserData = function() {
+        if (user.userId) {
+          var url = apiAddress+'api/users/'+user.userId
+          return $http.get(url)
+        } else {
+          return $q.reject("no user logged in")
+        }
+    };
+
     return {
       setUser: setUser,
-      getUser: getUser
+      getUser: getUser,
+      getUserData: getUserData
     }
   })
 

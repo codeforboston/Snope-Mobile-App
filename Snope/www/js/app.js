@@ -112,7 +112,13 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
   .state('updateUser', {
     url: '/update',
     templateUrl: 'templates/updateUser.html',
-    controller: 'UpdateUserCtrl'
+    controller: 'UpdateUserCtrl',
+    resolve: {
+      user_data: function(userService) {
+          var data = userService.getUserData()
+          return data
+      }
+    }
   })
 
   .state('tab.jobDetail', {
