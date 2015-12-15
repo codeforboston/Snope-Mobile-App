@@ -69,13 +69,21 @@ angular.module('starter.controllers', [])
   // user_data is loaded by a resolve (router)
   $scope.user = user_data.data
   $scope.update = function(){
-    console.log($scope.user)
     $http.put(apiAddress+'api/users/'+$scope.user._id, $scope.user)
     .then(function(response){
-      if(response.data.status == 200) {
-        $state.go('tab.list');
-      } else if(response.data.status == 500){
-        alert(response.data.message);
+      if(response.status == 200 && response.data.message == "User successfully updated!") {
+        var user = userService.getUser();
+        user.userType = $scope.user.type
+        userService.setUser(user);
+        if (user.userType == "shoveler") {
+          $state.go("tab.list");
+        } else if (user.userType == "customer") {
+          $state.go("tab.postJobForm");
+        } else {
+          alert("userType not correct");
+        }
+      } else {
+        alert(response);
       }
     });
   };
