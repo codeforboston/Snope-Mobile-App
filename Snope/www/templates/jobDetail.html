@@ -1,12 +1,11 @@
 <ion-view view-title="Job Detail">
 	<ion-content scroll="false">
-	      <p>{{job.address}}</p>
-				<p>{{user}}</p>
-				<p ng-if="user.userType == 'shoveler'">{{job.customerFirstName}} {{job.customerLastName}}</p>
-				<p ng-if="user.userType == 'customer'">{{job.shovelerFirstName}} {{job.shovelerLastName}}</p>
-	      <p>{{job.phoneNumber}}</p>
-	      <p>confirmation code: {{job.confirmationCode}}</p>
-	      <p>{{job.notes}}</p>
+				<p ng-if="user.userType == 'shoveler'">Customer Name: {{job.customerFirstName}} {{job.customerLastName}}</p>
+				<p ng-if="user.userType == 'customer'">Shoveler Name: {{job.shovelerFirstName}} {{job.shovelerLastName}}</p>
+	      <p>Address: {{job.address}}</p>
+	      <p>Phone Number: {{job.phoneNumber}}</p>
+	      <p>Confirmation Code: {{job.confirmationCode}}</p>
+	      <p>Additional Info: {{job.notes}}</p>
 	      <p>Note: All transactions are cash</p>
 	<div id="map_canvas">
 	    <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options">

@@ -2,22 +2,20 @@ angular.module('starter.services', [])
 
 
 .factory('userService', function() {
-  var user = {};
-  var setUser = function(userArgument) {
-      user = userArgument;
-  };
+    var user = {};
+    var setUser = function(userArgument) {
+        user = userArgument;
+    };
 
-  var getUser = function(){
-    debugger;
-      return user;
-  };
+    var getUser = function(){
+        return user;
+    };
 
-  return {
-    setUser: setUser,
-    getUser: getUser
-  };
-
-})
+    return {
+      setUser: setUser,
+      getUser: getUser
+    }
+  })
 
 .factory('JobService',['$http', '$filter', 'apiAddress',function($http, $filter, apiAddress){
     var openJobs = [];
@@ -77,13 +75,6 @@ angular.module('starter.services', [])
               return jobs;
             });
         },
-
-        //get a specific job tied to one customer
-        GetJobsForCustomer: function(jobId){
-
-            var object_by_id = $filter('filter')(jobs, {_id: jobId })[0];
-            return object_by_id;
-        }
 
     }
 }])
