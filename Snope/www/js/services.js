@@ -95,4 +95,15 @@ angular.module('starter.services', [])
       return q.promise;
     }
   }
+}])
+
+.factory('LocalStorage', ['$window', function($window) {
+  return {
+    set: function(key, value) {
+      $window.localStorage[key] = value;
+    },
+    get: function(key, defaultValue) {
+      return $window.localStorage[key] || defaultValue;
+    }
+  }
 }]);

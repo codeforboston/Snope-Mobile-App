@@ -108,6 +108,13 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
     templateUrl: 'templates/signup.html',
     controller: 'SignupCtrl'
   })
+  
+  .state('updateUser', {
+    url: '/update',
+    templateUrl: 'templates/updateUser.html',
+    controller: 'UpdateUserCtrl'
+  })
+
   .state('tab.jobDetail', {
     url: '/jobDetail/:id',
     views: {
