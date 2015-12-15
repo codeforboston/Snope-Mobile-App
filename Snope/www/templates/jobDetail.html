@@ -1,17 +1,19 @@
 <ion-view view-title="Job Detail">
-	<ion-content scroll="false"> 						      
+	<ion-content scroll="false">
 	      <p>{{job.address}}</p>
-	      <p>John Doe</p>
+				<p>{{user}}</p>
+				<p ng-if="user.userType == 'shoveler'">{{job.customerFirstName}} {{job.customerLastName}}</p>
+				<p ng-if="user.userType == 'customer'">{{job.shovelerFirstName}} {{job.shovelerLastName}}</p>
 	      <p>{{job.phoneNumber}}</p>
 	      <p>confirmation code: {{job.confirmationCode}}</p>
 	      <p>{{job.notes}}</p>
-	      <p>Note: All transactions are cash</p>	      
+	      <p>Note: All transactions are cash</p>
 	<div id="map_canvas">
 	    <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options">
 	        <ui-gmap-marker coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
 	        </ui-gmap-marker>
-	    </ui-gmap-google-map>    
+	    </ui-gmap-google-map>
 	</div>
-	      
+
 	</ion-content>
 </ion-view>

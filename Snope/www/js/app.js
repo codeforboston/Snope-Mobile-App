@@ -26,8 +26,8 @@ angular.module('ui.gravatar').config([
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'uiGmapgoogle-maps', 'ngCordova', 'ui.gravatar'])
-.constant("apiAddress", "http://45.55.102.116/")
-//.constant("apiAddress", "http://tunnel.shaneod.net/")
+// .constant("apiAddress", "http://45.55.102.116/")
+.constant("apiAddress", "http://tunnel.shaneod.net/")
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -70,7 +70,7 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
         controller: 'PastJobsCtrl'
       }
     }
-  })  
+  })
 
   .state('tab.list', {
     url: '/list',
@@ -80,7 +80,7 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
           controller: 'ListCtrl'
         }
       }
-  })  
+  })
 
   .state('tab.inProgress', {
     url: '/inProgress',
@@ -90,7 +90,7 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
           controller: 'InProgressCtrl'
         }
       }
-  })  
+  })
 
 
   //login page
@@ -106,7 +106,7 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
     templateUrl: 'templates/signup.html',
     controller: 'SignupCtrl'
   })
-  
+
 
   .state('tab.jobDetail', {
     url: '/jobDetail/:id',
@@ -124,7 +124,7 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
     controller: 'PostJobCtrl'
   })
 
-  
+
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');

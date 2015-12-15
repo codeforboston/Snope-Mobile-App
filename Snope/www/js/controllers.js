@@ -4,7 +4,7 @@ angular.module('starter.controllers', [])
 
 
 .controller('InProgressCtrl', function($scope, $stateParams) {
-  
+
 })
 
 
@@ -12,25 +12,23 @@ angular.module('starter.controllers', [])
   $scope.user = {};
   $scope.message = "";
   $scope.authenticate = function(){
-    debugger;
     $http.post(apiAddress+'api/login', $scope.user).then(function(response){
 
-      
+
       if (response.data.statusCode === 200){
-        debugger;
         var userObject = {};
         userObject['userId'] = response.data.userId;
-        userObject['userType'] = response.data.userType;      
+        userObject['userType'] = response.data.userType;
 
         userService.setUser(userObject);
-            
 
-        $state.go('tab.list');  
+
+        $state.go('tab.list');
       } else {
         alert("Error: " + response.data.message);
       }
-      
-      
+
+
     });
     console.log($scope.user)
     //$scope.message = "password invalid";
@@ -48,12 +46,12 @@ angular.module('starter.controllers', [])
     $http.post(apiAddress+'api/users', $scope.user)
 
     .then(function(response){
-      
-      if(response.data.statusCode == 200) {        
-        
+
+      if(response.data.statusCode == 200) {
+
         var userObject = {};
         userObject['userId'] = response.data.userId;
-        userObject['userType'] = response.data.userType;      
+        userObject['userType'] = response.data.userType;
 
         userService.setUser(userObject);
 
@@ -76,22 +74,24 @@ angular.module('starter.controllers', [])
 .controller('ListCtrl', ['$state','$scope', 'JobService',function($state, $scope, JobService){
     //get open jobs available to shoveler
     JobService.GetOpenJobsForShoveler().then(function(result){
-    $scope.jobs = result;  
-    
+    $scope.jobs = result;
   });
-  
+
 
 }])
 
-.controller('JobDetailCtrl', [ '$scope','$stateParams', '$log', '$timeout', 'JobService', 'uiGmapGoogleMapApi',function(  $scope, $stateParams, $log, $timeout, JobService, uiGmapGoogleMapApi){
+.controller('JobDetailCtrl', [ '$scope','$stateParams', '$log', '$timeout', 'JobService', 'uiGmapGoogleMapApi', 'userService',function(  $scope, $stateParams, $log, $timeout, JobService, uiGmapGoogleMapApi, userService){
   var jobId = $stateParams.id;
-  $scope.job = JobService.GetOpenJob(jobId);
-  
-  var latitude = parseFloat($scope.job.latitude);
-  var longitude = parseFloat($scope.job.longitude);
+  JobService.GetJob(jobId).then(function(result){
+    debugger;
+    $scope.job = result;
 
- // 
-    $scope.map = {center: {latitude: latitude, longitude: longitude }, zoom: 16 };    
+    var latitude = parseFloat($scope.job.latitude);
+    var longitude = parseFloat($scope.job.longitude);
+
+    $scope.user = userService.getUser();
+
+    $scope.map = {center: {latitude: latitude, longitude: longitude }, zoom: 16 };
     $scope.marker = {
       id: 0,
       coords: {
@@ -99,6 +99,9 @@ angular.module('starter.controllers', [])
         longitude: longitude
       }
     };
+  });
+
+
 }])
 
 
@@ -107,26 +110,26 @@ angular.module('starter.controllers', [])
   var userId = user.userId;
   JobService.GetCompletedJobsForShoveler(userId).then(function(result){
     $scope.jobs = result;
-    
+
   });
-  
+
 
 
 }])
 
 .controller('TabCtrl', function($state, $scope){
-  var hideTabsStates = ['login']; 
+  var hideTabsStates = ['login'];
 
     $rootScope.$on('$ionicView.beforeEnter', function () {
         $rootScope.hideTabs = ~hideTabsStates.indexOf($state.current.name)
     });
 
-  
+
 })
 
 .controller('PostJobCtrl', ['$scope', 'Camera','$http', 'uiGmapGoogleMapApi', '$cordovaGeolocation', 'apiAddress', function($scope, Camera, $http, uiGmapGoogleMapApi, $cordovaGeolocation, apiAddress){
 
-  $scope.job = {};  
+  $scope.job = {};
   $scope.job['customerId'] = "56551c3995df308b01000004";
   alert("call get user location");
   debugger;
@@ -154,10 +157,10 @@ angular.module('starter.controllers', [])
       var geocoder = new google.maps.Geocoder();
         geocoder.geocode({'location': latlng}, function(results, status) {
         if (status === google.maps.GeocoderStatus.OK) {
-          
+
           if (results[1]) {
-                                  
-            
+
+
           } else {
             alert('No results found');
           }
@@ -167,10 +170,10 @@ angular.module('starter.controllers', [])
       });
     });
   }
-  
+
 
   $scope.geocodeAddress = function(){
-    uiGmapGoogleMapApi.then(function(maps) {      
+    uiGmapGoogleMapApi.then(function(maps) {
       //create Google geocoder
       var geocoder = new google.maps.Geocoder();
       //gather address information from post job form
@@ -178,22 +181,22 @@ angular.module('starter.controllers', [])
       //find lat and lng associate with user-entered address
       geocoder.geocode( {address: addressString }, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
-        
+
         $scope.job['latitude'] = results[0].geometry.location.G;
         $scope.job['longitude'] = results[0].geometry.location.K;
 
         //submit job only after successful geocoding
-        
+
         $scope.postJob();
-                    
-        } else {      
+
+        } else {
           alert("We couldn't find your address. Please try again. Error: " + status);
         }
       });
     });
   };
-  
-  
+
+
   $scope.getPhoto = function() {
 
     var cameraOptions =   {   quality: 50,
@@ -203,10 +206,10 @@ angular.module('starter.controllers', [])
                   };
 
     navigator.camera.getPicture(function(imageData) {
-      
+
 
       $scope.job['photo'] = imageData;
-    
+
 
   }, function(err) {
 
@@ -221,13 +224,13 @@ angular.module('starter.controllers', [])
 
     $http.post(apiAddress+'api/jobs', $scope.job)
     .then(function(response){
-      
-        alert("post success!");        
-      if(response.data.statusCode == 200) {      
-      
+
+        alert("post success!");
+      if(response.data.statusCode == 200) {
+
       } else if(response.data.statusCode == 500){
 
-      }                    
+      }
     });
   }
 
