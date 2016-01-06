@@ -1,36 +1,39 @@
 <ion-view view-title="Post New Job">
-  <ion-content>    
+  <ion-content>
     <div class="list list-inset">
       <h1>Create Job</h1>
-      
-      <label class="item item-input">
-        <input type="text" placeholder="Address" ng-model="job.address">
-      </label>
-      <label class="item item-input">
-        <input type="text" placeholder="City" ng-model="job.city">
-      </label>
-      <label class="item item-input">
-        <input type="text" placeholder="State" ng-model="job.state">
-      </label>
-      <label class="item item-input">
-        <input type="text" placeholder="Zip Code" ng-model="job.zipCode">
-      </label>
-      <label class="item item-input">
-        <input type="text" placeholder="Phone Number" ng-model="job.phoneNumber">
-      </label>
-      <label class="item item-input">
-        <input type="text" placeholder="Fee Offered" ng-model="job.price">
-      </label>
-      <label class="item item-input">
-        <textarea placeholder="Notes" ng-model="job.notes"></textarea>
-      </label>
-      <button class="button button-block button-positive activated" ng-click="getPhoto()">Add Photo</button>
-      
-      <button class="button button-block button-positive activated" ng-click="geocodeAddress()">Post Job</button>
+      <form name="postJobForm">
+        <label class="item item-input">
+          <input type="text" name="address" placeholder="Address" ng-model="job.address" required>
+        </label>
+        <label class="item item-input">
+          <input type="text" name="text" placeholder="City" ng-model="job.city" required>
+        </label>
+        <label class="item item-input">
+          <input type="text" name="state" placeholder="State" ng-model="job.state" required>
+        </label>
+        <label class="item item-input">
+          <input type="text" name="zipcode" placeholder="Zip Code" ng-model="job.zipCode" required>
+        </label>
+        <label class="item item-input">
+          <input type="tel" name="phonenumber" placeholder="Phone Number" ng-model="job.phoneNumber" data-phone required>
+        </label>
+        <div ng-show="postJobForm.phonenumber.$dirty && postJobForm.phonenumber.$invalid">Please enter a valid phone number.</div>
+        <label class="item item-input">
+          <input type="number" name="fee" placeholder="Fee Offered" ng-model="job.price" required>
+        </label>
+        <label class="item item-input">
+          <textarea placeholder="Notes" name="notes" ng-model="job.notes"></textarea>
+        </label>
+        <button class="button button-block button-positive activated" ng-click="getPhoto()">Add Photo</button>
+
+        <button class="button button-block button-positive activated" ng-click="geocodeAddress()"
+                ng-disabled="postJobForm.$invalid">Post Job
+        </button>
+      </form>
     </div>
-    
-    
+
+
   </ion-content>
 </ion-view>
 
-     
