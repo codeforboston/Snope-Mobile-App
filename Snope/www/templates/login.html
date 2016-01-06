@@ -1,17 +1,26 @@
-<ion-view view-title="Login" >
-	<ion-content> 
-		<div class="list list-inset">
-		  <label class="item item-input">
-		    <input type="text" placeholder="Email" ng-model="user.email">
-		  </label>
-		  <label class="item item-input">
-		    <input type="password" placeholder="Password" ng-model="user.password">
-		  </label>  
-		  <button class="button button-block button-positive activated" ng-click="authenticate()">Log In</button>
-		  <div ng-show="message.length > 0">{{ message }}</div>
-		  <h5>No account?</h5>
-		  <a href="#/signup"><button class="button button-block button-positive">Sign Up</button></a>
-		</div>		
-	</ion-content>	
+<ion-view view-title="Login">
+  <ion-content>
+    <div class="list list-inset">
+      <form name="loginForm" ng-submit="authenticate()">
+
+        <label class="item item-input" ng-class="{error: loginForm.email.$valid}">
+          <input type="email" name="email" placeholder="Email" ng-model="user.email" required>
+        </label>
+        <div ng-show="loginForm.email.$dirty && loginForm.email.$invalid">Please enter a valid email address</div>
+        <label class="item item-input">
+          <input type="password" name="password" placeholder="Password" ng-model="user.password" required>
+        </label>
+        <button class="button button-block button-positive activated"
+                ng-disabled="loginForm.$invalid">Log In
+        </button>
+      </form>
+
+      <div ng-show="message.length > 0">{{ message }}</div>
+      <h5>No account?</h5>
+      <a href="#/signup">
+        <button class="button button-block button-positive">Sign Up</button>
+      </a>
+    </div>
+  </ion-content>
 
 </ion-view>
