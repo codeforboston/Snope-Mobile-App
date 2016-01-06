@@ -148,7 +148,6 @@ angular.module('starter.controllers', [])
     };
   });
 
-
 }])
 
 
@@ -157,6 +156,8 @@ angular.module('starter.controllers', [])
   var userId = user.userId;
   JobService.GetCompletedJobsForShoveler(userId).then(function(result){
     $scope.jobs = result;
+    alert(result);
+    
 
   });
 
@@ -253,6 +254,8 @@ angular.module('starter.controllers', [])
 
       $scope.job['photo'] = imageData;
 
+      alert("photo created");
+      debugger;
 
   }, function(err) {
 

@@ -24,6 +24,8 @@
       <label class="item item-input">
         <textarea placeholder="Notes" ng-model="job.notes"></textarea>
       </label>
+      <pre>{{job | json}}</pre>
+      <img src="data:image/gif;base64,{{job.photo}}" ng-if="job.photo">
       <button class="button button-block button-positive activated" ng-click="getPhoto()">Add Photo</button>
       
       <button class="button button-block button-positive activated" ng-click="geocodeAddress()">Post Job</button>

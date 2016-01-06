@@ -102,7 +102,7 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
     controller: 'LoginCtrl'
   })
 
-  //login page
+  //signup page
   .state('signup', {
     url: '/signup',
     templateUrl: 'templates/signup.html',
