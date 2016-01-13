@@ -45,7 +45,9 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider, $compileProvider) {
+
+  
 
   $httpProvider.defaults.useXDomain = true;
 

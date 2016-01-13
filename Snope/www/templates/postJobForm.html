@@ -25,6 +25,9 @@
         <label class="item item-input">
           <textarea placeholder="Notes" name="notes" ng-model="job.notes"></textarea>
         </label>
+        
+        <img ng-src="{{formattedPhoto}}" id="jobImage" ng-click="confirmChangePhoto()">
+        
         <button class="button button-block button-positive activated" ng-click="getPhoto()">Add Photo</button>
 
         <button class="button button-block button-positive activated" ng-click="geocodeAddress()"

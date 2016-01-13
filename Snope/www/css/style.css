@@ -13,3 +13,8 @@
 a {
 	text-decoration: none;
 }
+
+#jobImage {
+	max-width: 100%;
+	max-height: 100%;
+}

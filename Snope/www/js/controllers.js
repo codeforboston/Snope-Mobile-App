@@ -12,6 +12,8 @@ angular.module('starter.controllers', [])
   .controller('LoginCtrl', function ($scope, $stateParams, $http, $state, apiAddress, userService) {
     $scope.user = {};
     $scope.message = "";
+    //$scope.formattedPhoto = "data:image/png;base64,"+ $scope.job.photo;
+
     $scope.authenticate = function () {
       $http.post(apiAddress + 'api/login', $scope.user).then(function (response) {
 
@@ -253,12 +255,10 @@ angular.module('starter.controllers', [])
       };
 
       navigator.camera.getPicture(function (imageData) {
-
-
-        $scope.job['photo'] = imageData;
-
-      alert("photo created");
-      debugger;
+        $scope.$apply(function() {
+          $scope.formattedPhoto = "data:image/png;base64,"+  imageData;
+        alert("photo created");
+        }); 
 
       }, function (err) {
 
@@ -266,6 +266,11 @@ angular.module('starter.controllers', [])
 
       }, cameraOptions);
 
+    };
+
+    $scope.confirmChangePhoto = function(){
+      var result = window.confirm("Would you like to retake the picture?");
+      debugger;
     };
 
     $scope.postJob = function () {
