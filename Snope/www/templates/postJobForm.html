@@ -16,7 +16,8 @@
           <input type="text" name="zipcode" placeholder="Zip Code" ng-model="job.zipCode" required>
         </label>
         <label class="item item-input">
-          <input type="tel" name="phonenumber" placeholder="Phone Number" ng-model="job.phoneNumber" data-phone required>
+          <input type="tel" name="phonenumber" placeholder="Phone Number" ng-model="job.phoneNumber" data-phone
+                 ng-model-options="{'updateOn': 'blur'}" required>
         </label>
         <div ng-show="postJobForm.phonenumber.$dirty && postJobForm.phonenumber.$invalid">Please enter a valid phone number.</div>
         <label class="item item-input">

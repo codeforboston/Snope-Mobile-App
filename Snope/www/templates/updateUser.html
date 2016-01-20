@@ -10,14 +10,16 @@
           <input type="text" name="lastname" placeholder="Last Name" ng-model="user.lastName">
         </label>
         <label class="item item-input">
-          <input type="email" name="email" placeholder="{{user_data.email}}" ng-model="user.email">
+          <input type="email" name="email" placeholder="{{user_data.email}}" ng-model="user.email"
+                 ng-model-options="{'updateOn': 'blur'}">
         </label>
         <div ng-show="updateUserForm.email.$dirty && updateUserForm.email.$invalid">Please enter a valid email address</div>
         <label class="item item-input">
           <input type="password" name="password" placeholder="Password" ng-model="user.password">
         </label>
         <label class="item item-input">
-          <input type="tel" name="phonenumber" placeholder="Phone Number" ng-model="user.phoneNumber" data-phone>
+          <input type="tel" name="phonenumber" placeholder="Phone Number" ng-model="user.phoneNumber" data-phone
+                 ng-model-options="{'updateOn': 'blur'}">
         </label>
         <div ng-show="updateUserForm.phonenumber.$dirty && updateUserForm.phonenumber.$invalid">Please enter a valid phone number.</div>
         <label class="item item-input">
