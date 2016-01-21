@@ -126,6 +126,7 @@ angular.module('starter.controllers', [])
     //get open jobs available to shoveler
     JobService.GetOpenJobsForShoveler().then(function (result) {
       $scope.jobs = result;
+      debugger;
     });
 
 
@@ -157,12 +158,13 @@ angular.module('starter.controllers', [])
 
 
   .controller('PastJobsCtrl', ['$scope', 'JobService', 'userService', function ($scope, JobService, userService) {
+    
     var user = userService.getUser();
     var userId = user.userId;
     JobService.GetCompletedJobsForShoveler(userId).then(function (result) {
       $scope.jobs = result;
 
-
+      
     });
 
   }])

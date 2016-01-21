@@ -58,6 +58,7 @@ angular.module('starter.services', [])
         return $http.get(apiAddress + 'api/completedJobsForShoveler/' + userId)
           .then(function (result) {
             completedJobs = result.data;
+            debugger;
             return completedJobs;
           });
       },
