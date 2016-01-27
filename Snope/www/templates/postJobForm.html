@@ -13,15 +13,15 @@
           <input type="text" name="state" placeholder="State" ng-model="job.state" required>
         </label>
         <label class="item item-input">
-          <input type="text" name="zipcode" placeholder="Zip Code" ng-model="job.zipCode" required>
+          <input type="number" name="zipcode" ng-minlength="5" ng-maxlength="5" placeholder="Zip Code" ng-model="job.zipCode" required>
         </label>
         <label class="item item-input">
           <input type="tel" name="phonenumber" placeholder="Phone Number" ng-model="job.phoneNumber" data-phone
-                 ng-model-options="{'updateOn': 'blur'}" required>
+                 ng-model-options="{'updateOn': 'blur'}" mask="(999) 999- 9999" required>
         </label>
         <div ng-show="postJobForm.phonenumber.$dirty && postJobForm.phonenumber.$invalid">Please enter a valid phone number.</div>
         <label class="item item-input">
-          <input type="number" name="fee" placeholder="Fee Offered" ng-model="job.price" required>
+          <input type="number" min="0" name="fee" placeholder="Fee Offered" ng-model="job.price" required>
         </label>
         <label class="item item-input">
           <textarea placeholder="Notes" name="notes" ng-model="job.notes"></textarea>

@@ -25,7 +25,7 @@ angular.module('ui.gravatar').config([
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'uiGmapgoogle-maps', 'ngCordova', 'ui.gravatar'])
+var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'uiGmapgoogle-maps', 'ngCordova', 'ui.gravatar', 'ngMask'])
 .constant("apiAddress", "http://45.55.102.116/")
 // .constant("apiAddress", "http://tunnel.shaneod.net/")
 
